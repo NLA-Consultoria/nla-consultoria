@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="64" viewBox="0 0 160 64" role="img" aria-label="Logotipo NLA Consultoria">
+  <rect width="160" height="64" fill="#ffffff"/>
+  <g font-family="Inter, Arial, sans-serif" font-weight="700" font-size="28" fill="#2A27C6">
+    <text x="16" y="42">NLA</text>
+  </g>
+  <g font-family="Inter, Arial, sans-serif" font-size="10" fill="#0F172A" opacity="0.9">
+    <text x="70" y="42">Consultoria</text>
+  </g>
+  <line x1="80" y1="8" x2="80" y2="56" stroke="#1D4ED8" stroke-width="1" transform="rotate(2 80 32)"/>
+</svg>
+

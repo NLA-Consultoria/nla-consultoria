@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  nla-portal:
+    image: ghcr.io/SEU_USUARIO_GH/nla-portal:latest
+    container_name: nla-portal
+    restart: unless-stopped
+    ports:
+      - "80:3000"  # Externo:80 -> Interno:3000
+    environment:
+      # Atenção: em Next.js, variáveis NEXT_PUBLIC_* são incorporadas no build.
+      # Para refletir mudanças, gere uma nova imagem (build) com os novos valores.
+      NEXT_PUBLIC_SITE_URL: https://seu-dominio.com
+      NEXT_PUBLIC_GTM_ID: ""
+      NEXT_PUBLIC_POSTHOG_KEY: ""
+      NEXT_PUBLIC_AGENDA_URL: ""
+      NEXT_PUBLIC_WHATSAPP_URL: ""
+      NEXT_PUBLIC_N8N_WEBHOOK_URL: https://n8n.nlaconsultoria.com.br/webhook/3761388d-abd3-489c-9800-eb843058f504
+    # volumes: []  # app é estático; sem necessidade de volumes
+
