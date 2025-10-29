@@ -20,5 +20,5 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules", "trash", "**/*.removed.*"]
+  "exclude": ["node_modules", "nla-portal/**", "trash/**", "**/*.removed.*"]
 }
