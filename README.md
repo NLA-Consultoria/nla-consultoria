@@ -19,7 +19,7 @@ Copie `.env.example` para `.env.local` e preencha conforme necessário:
 - `NEXT_PUBLIC_GTM_ID` — Google Tag Manager (opcional)
 - `NEXT_PUBLIC_POSTHOG_KEY` — alternativa ao GTM (opcional)
 - `NEXT_PUBLIC_SITE_URL` — URL pública do site para canônico/OG
-
+##teste
 ## Estrutura de conteúdo
 
 - `content/home.ts`: todos os textos da página. Comentários indicam os blocos de copy. Altere livremente.
