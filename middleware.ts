@@ -6,28 +6,22 @@ const CANONICAL_HOST = 'licitacao.nlaconsultoria.com.br'
 
 export function middleware(req: NextRequest) {
   const xfProto = req.headers.get('x-forwarded-proto') ?? ''
-  const xfHost = req.headers.get('x-forwarded-host') ?? ''
-  const host = xfHost || req.headers.get('host') || ''
+  const xfHost  = req.headers.get('x-forwarded-host') ?? ''
+  const host    = xfHost || req.headers.get('host') || ''
   const isHttps = xfProto === 'https'
 
-  // sempre constrói a URL alvo do zero (sem herdar porta)
+  // Constrói SEM porta (elimina o ':80')
   const target = () =>
     new URL(req.nextUrl.pathname + req.nextUrl.search, `https://${CANONICAL_HOST}`)
 
   // 1) força HTTPS
-  if (!isHttps) {
-    return NextResponse.redirect(target(), 308)
-  }
+  if (!isHttps) return NextResponse.redirect(target(), 308)
 
-  // 2) www → canônico
-  if (host === `www.${CANONICAL_HOST}`) {
-    return NextResponse.redirect(target(), 308)
-  }
+  // 2) www -> canônico
+  if (host === `www.${CANONICAL_HOST}`) return NextResponse.redirect(target(), 308)
 
-  // 3) qualquer outro host → canônico
-  if (host !== CANONICAL_HOST) {
-    return NextResponse.redirect(target(), 308)
-  }
+  // 3) qualquer outro host -> canônico
+  if (host !== CANONICAL_HOST) return NextResponse.redirect(target(), 308)
 
   return NextResponse.next()
 }
