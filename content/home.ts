@@ -20,10 +20,7 @@ export const content = {
       "Aumente suas vendas — agora com o maior comprador do Brasil.",
     subtitle:
       "Se você já pensou em vender para prefeituras e governo, mas nunca tirou do papel, nós abrimos esse canal de receita para você: oportunidades certas, documentos no ponto e acompanhamento até a assinatura — sem caos interno.",
-    proofs: [
-      "Sondagem de oportunidades sob medida",
-      "Acompanhamento ponta a ponta",
-    ],
+    proofs: [],
     cta: "Agendar minha reunião",
   },
   porque: {
@@ -135,4 +132,3 @@ export const content = {
 };
 
 export type SiteContent = typeof content;
-

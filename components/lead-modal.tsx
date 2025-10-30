@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -14,6 +14,7 @@ import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 import { leadSchema, PHONE_MASK, type LeadData } from "../lib/validators";
 import { env } from "../lib/env";
+import { z } from "zod";
 
 type LeadModalContextType = { open: () => void };
 const LeadModalContext = createContext<LeadModalContextType | null>(null);
@@ -33,11 +34,14 @@ export function LeadModalProvider({ children }: { children: React.ReactNode }) {
   const [uf, setUf] = useState("");
   const [cities, setCities] = useState<string[]>([]);
   const [phone, setPhone] = useState("");
+  const [step, setStep] = useState(1);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const open = useCallback(() => {
     setError(null);
     setSuccess(false);
     setIsOpen(true);
+    setStep(1);
   }, []);
 
   const value = useMemo(() => ({ open }), [open]);
@@ -65,6 +69,33 @@ export function LeadModalProvider({ children }: { children: React.ReactNode }) {
     if (d.length <= 2) return `(${d}`;
     if (d.length <= 7) return `(${d.slice(0,2)}) ${d.slice(2)}`;
     return `(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}`;
+  }
+
+  // Valida√ß√£o por etapas
+  const step1Schema = leadSchema.pick({ name: true, phone: true, email: true });
+  const step2Schema = leadSchema.pick({ company: true, uf: true, city: true });
+  const step3Schema = leadSchema.pick({ billing: true, soldToGov: true, pain: true });
+
+  function validateCurrentStep(): string | null {
+    const form = formRef.current;
+    if (!form) return null;
+    const fd = new FormData(form);
+    if (step === 1) {
+      const parsed = step1Schema.safeParse({
+        name: String(fd.get('name')||''),
+        phone: String(fd.get('phone')||''),
+        email: String(fd.get('email')||''),
+      });
+      if (!parsed.success) return parsed.error.issues[0]?.message || 'Verifique os campos do passo 1';
+    } else if (step === 2) {
+      const parsed = step2Schema.safeParse({
+        company: String(fd.get('company')||''),
+        uf: String(fd.get('uf')||'').toUpperCase(),
+        city: String(fd.get('city')||''),
+      });
+      if (!parsed.success) return parsed.error.issues[0]?.message || 'Verifique os campos do passo 2';
+    }
+    return null;
   }
 
   async function onSubmit(formData: FormData) {
@@ -112,9 +143,9 @@ export function LeadModalProvider({ children }: { children: React.ReactNode }) {
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent aria-describedby="lead-desc">
           <DialogHeader>
-            <DialogTitle>Agendar minha reuni√£o</DialogTitle>
+            <DialogTitle>Agendar minha reuni„o</DialogTitle>
             <DialogDescription id="lead-desc">
-              Preencha os dados para entrarmos em contato e agendar. Seus dados ser√£o usados apenas para contato e agendamento.
+              Preencha os dados em 3 passos r·pidos. Seus dados ser„o usados apenas para contato e agendamento.
             </DialogDescription>
           </DialogHeader>
           <form

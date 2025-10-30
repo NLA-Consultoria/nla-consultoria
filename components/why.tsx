@@ -2,12 +2,12 @@
 
 import { content } from "../content/home";
 import { Button } from "./ui/button";
-import { useLeadModal } from "./lead-modal";
+import { useLeadModal } from "./lead-modal-wizard";
 
 export function Why() {
   const { open } = useLeadModal();
   return (
-    <section id="porque" className="container py-16">
+    <section id="porque" className="container py-16 scroll-mt-24">
       <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
         {content.porque.title}
       </h2>

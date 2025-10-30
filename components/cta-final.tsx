@@ -2,7 +2,7 @@
 
 import { content } from "../content/home";
 import { Button } from "./ui/button";
-import { useLeadModal } from "./lead-modal";
+import { useLeadModal } from "./lead-modal-wizard";
 
 export function CtaFinal() {
   const { open } = useLeadModal();
@@ -19,4 +19,3 @@ export function CtaFinal() {
     </section>
   );
 }
-

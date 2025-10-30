@@ -68,6 +68,7 @@
 
 * { @apply border-border; }
 body { @apply bg-background text-foreground antialiased font-medium; }
+html { scroll-behavior: smooth; }
 
 /* Focus styles */
 :focus-visible {

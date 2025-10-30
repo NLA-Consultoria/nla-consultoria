@@ -2,7 +2,7 @@
 
 import { content } from "../content/home";
 import { Button } from "./ui/button";
-import { useLeadModal } from "./lead-modal";
+import { useLeadModal } from "./lead-modal-wizard";
 
 export function Hero() {
   const { open } = useLeadModal();

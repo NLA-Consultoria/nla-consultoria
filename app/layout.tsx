@@ -3,7 +3,7 @@ import "./globals.css";
 import { defaultSEO, organizationJsonLd } from "../lib/seo";
 import { env } from "../lib/env";
 import Script from "next/script";
-import { LeadModalProvider } from "../components/lead-modal";
+import { LeadModalProvider } from "../components/lead-modal-wizard";
 import { CookieConsent } from "../components/cookie-consent";
 import { Header } from "../components/header";
 
@@ -35,7 +35,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         {/* Define tema inicial baseado no localStorage */}
         <Script id="theme-init" strategy="beforeInteractive">{`
-          try { document.documentElement.classList.toggle('dark', localStorage.getItem('theme') === 'dark'); } catch {}
+          try {
+            var ls = localStorage.getItem('theme');
+            var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            var theme = ls ? ls : (prefersDark ? 'dark' : 'light');
+            document.documentElement.classList.toggle('dark', theme === 'dark');
+          } catch {}
         `}</Script>
         {/* Fontes para a logo: Libre Baskerville e Inter */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />

@@ -2,7 +2,7 @@ import { content } from "../content/home";
 
 export function Testimonials() {
   return (
-    <section id="depoimentos" className="container py-16">
+    <section id="depoimentos" className="container py-16 scroll-mt-24">
       <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
         {content.depoimentos.title}
       </h2>

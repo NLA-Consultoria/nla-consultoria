@@ -4,7 +4,7 @@ import Link from "next/link";
 import { content } from "../content/home";
 import { Button } from "./ui/button";
 import { ThemeToggle } from "./theme-toggle";
-import { useLeadModal } from "./lead-modal";
+import { useLeadModal } from "./lead-modal-wizard";
 import LogoV8 from "./logo-v8";
 import { useEffect, useState } from "react";
 
@@ -26,9 +26,13 @@ export function Header() {
         <Link href="#" className="flex items-center gap-2" aria-label="NLA Consultoria">
           <LogoV8 size={28} theme={dark ? "white" : "primary"} />
         </Link>
-        <nav className="hidden items-center gap-6 md:flex">
+        <nav className="hidden md:flex flex-1 items-center justify-center gap-6">
           {content.nav.anchors.map((a) => (
-            <Link key={a.href} href={a.href} className="text-sm text-muted-foreground hover:text-foreground">
+            <Link
+              key={a.href}
+              href={a.href}
+              className="text-sm text-muted-foreground hover:text-foreground text-center"
+            >
               {a.label}
             </Link>
           ))}

@@ -2,12 +2,12 @@
 
 import { content } from "../content/home";
 import { Button } from "./ui/button";
-import { useLeadModal } from "./lead-modal";
+import { useLeadModal } from "./lead-modal-wizard";
 
 export function How() {
   const { open } = useLeadModal();
   return (
-    <section id="como-funciona" className="container py-16">
+    <section id="como-funciona" className="container py-16 scroll-mt-24">
       <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
         {content.comoFunciona.title}
       </h2>
