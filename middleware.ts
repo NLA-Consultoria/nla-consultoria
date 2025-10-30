@@ -2,30 +2,25 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
-const CANONICAL_HOST = 'licitacao.nlaconsultoria.com.br'
+const CANONICAL = 'licitacao.nlaconsultoria.com.br'
 
 export function middleware(req: NextRequest) {
-  const xfProto = req.headers.get('x-forwarded-proto') ?? ''
-  const xfHost  = req.headers.get('x-forwarded-host') ?? ''
-  const host    = xfHost || req.headers.get('host') || ''
-  const isHttps = xfProto === 'https'
+  const xfProto = req.headers.get('x-forwarded-proto') || ''
+  const xfHost  = req.headers.get('x-forwarded-host') || req.headers.get('host') || ''
+  // pega o primeiro host (se vier lista), remove porta se houver
+  const host = xfHost.split(',')[0].trim().split(':')[0]
+  const isHttps = xfProto === 'https' || req.nextUrl.protocol === 'https:'
 
-  // Constrói SEM porta (elimina o ':80')
-  const target = () =>
-    new URL(req.nextUrl.pathname + req.nextUrl.search, `https://${CANONICAL_HOST}`)
+  const url = new URL(req.nextUrl.pathname + req.nextUrl.search, `https://${CANONICAL}`)
 
-  // 1) força HTTPS
-  if (!isHttps) return NextResponse.redirect(target(), 308)
-
-  // 2) www -> canônico
-  if (host === `www.${CANONICAL_HOST}`) return NextResponse.redirect(target(), 308)
-
-  // 3) qualquer outro host -> canônico
-  if (host !== CANONICAL_HOST) return NextResponse.redirect(target(), 308)
+  // força https
+  if (!isHttps) return NextResponse.redirect(url, 308)
+  // www ou qualquer outro host -> canônico SEM porta
+  if (host !== CANONICAL) return NextResponse.redirect(url, 308)
 
   return NextResponse.next()
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)'],
+  matcher: ['/((?!_next/.*|favicon.ico|robots.txt|sitemap.xml).*)'],
 }
