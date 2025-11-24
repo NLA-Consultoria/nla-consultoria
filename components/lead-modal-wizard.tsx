@@ -7,6 +7,7 @@ import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 import { leadSchema, PHONE_MASK, type LeadData } from "../lib/validators";
+import { trackMetaEvent } from "../lib/trackMetaEvent";
 
 type LeadModalContextType = { open: () => void };
 const LeadModalContext = createContext<LeadModalContextType | null>(null);
@@ -53,6 +54,11 @@ export function LeadModalProvider({ children }: { children: React.ReactNode }) {
     setError(null);
     setIsOpen(true);
     setStep(1);
+    // Dispara evento "Lead" ao abrir o formulário (Pixel + CAPI via trackMetaEvent)
+    trackMetaEvent({
+      eventName: "Lead",
+      eventSourceUrl: typeof window !== "undefined" ? window.location.href : undefined,
+    });
   }, []);
 
   const value = useMemo(() => ({ open }), [open]);
@@ -241,4 +247,3 @@ export function LeadModalProvider({ children }: { children: React.ReactNode }) {
     </LeadModalContext.Provider>
   );
 }
-
