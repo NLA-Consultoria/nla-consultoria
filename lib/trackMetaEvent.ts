@@ -22,7 +22,7 @@ export function trackMetaEvent(opts: TrackMetaEventOptions) {
   if (shouldSendPixel && typeof window !== "undefined" && (window as any).fbq) {
     (window as any).fbq("track", opts.eventName, {
       ...opts.customData,
-      event_id: eventId, // deduplicação Pixel x CAPI
+      event_id: eventId,
     });
   }
 
@@ -42,7 +42,5 @@ export function trackMetaEvent(opts: TrackMetaEventOptions) {
       },
       customData: opts.customData,
     }),
-  }).catch(() => {
-    // Falha silenciosa para não afetar UX
-  });
+  }).catch(() => {});
 }
