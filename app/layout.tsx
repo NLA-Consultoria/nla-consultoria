@@ -32,6 +32,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const jsonOrg = organizationJsonLd();
+  const pixelId = env.META_PIXEL_ID || "1910664499856303";
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <head>
@@ -73,7 +74,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             posthog.init('${env.POSTHOG_KEY}',{api_host:'https://app.posthog.com'});
           `}</Script>
         )}
-        {env.META_PIXEL_ID && (
+        {pixelId && (
           <>
             {/* Meta Pixel Code */}
             <script
@@ -90,7 +91,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     t.src=v;s=b.getElementsByTagName(e)[0];
                     s.parentNode.insertBefore(t,s)}(window, document,'script',
                     'https://connect.facebook.net/en_US/fbevents.js');
-                    fbq('init', '${env.META_PIXEL_ID}');
+                    fbq('init', '${pixelId}');
                     fbq('track', 'PageView');
                   }
                 `,
@@ -101,7 +102,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 height="1"
                 width="1"
                 style={{ display: "none" }}
-                src={`https://www.facebook.com/tr?id=${env.META_PIXEL_ID}&ev=PageView&noscript=1`}
+                src={`https://www.facebook.com/tr?id=${pixelId}&ev=PageView&noscript=1`}
                 alt=""
               />
             </noscript>
