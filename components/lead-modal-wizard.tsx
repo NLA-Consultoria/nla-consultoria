@@ -54,11 +54,6 @@ export function LeadModalProvider({ children }: { children: React.ReactNode }) {
     setError(null);
     setIsOpen(true);
     setStep(1);
-    // Dispara evento "Lead" ao abrir o formulário (Pixel + CAPI via trackMetaEvent)
-    trackMetaEvent({
-      eventName: "Lead",
-      eventSourceUrl: typeof window !== "undefined" ? window.location.href : undefined,
-    });
   }, []);
 
   const value = useMemo(() => ({ open }), [open]);
@@ -128,6 +123,12 @@ export function LeadModalProvider({ children }: { children: React.ReactNode }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...payload, source: "nla-site", step: "final", stepCount: 3 }),
+      });
+
+      // Dispara o evento "Lead" apenas quando o formulário é concluído com sucesso
+      trackMetaEvent({
+        eventName: "Lead",
+        eventSourceUrl: typeof window !== "undefined" ? window.location.href : undefined,
       });
 
       setIsOpen(false);
