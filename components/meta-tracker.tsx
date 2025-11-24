@@ -33,6 +33,8 @@ export function MetaTracker() {
       eventName: "PageView",
       eventSourceUrl: url,
       userData: { fbp, fbc },
+      // Evita duplicar a PageView do snippet do pixel (deduplicação fica apenas com CAPI aqui)
+      sendPixel: false,
     });
   }, [pathname, searchParams]);
 

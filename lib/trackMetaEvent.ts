@@ -4,6 +4,7 @@ type TrackMetaEventOptions = {
   eventName: string;
   eventId?: string;
   eventSourceUrl?: string;
+  sendPixel?: boolean;
   userData?: {
     email?: string;
     phone?: string;
@@ -17,7 +18,9 @@ type TrackMetaEventOptions = {
 export function trackMetaEvent(opts: TrackMetaEventOptions) {
   const eventId = opts.eventId ?? crypto.randomUUID();
 
-  if (typeof window !== "undefined" && (window as any).fbq) {
+  const shouldSendPixel = opts.sendPixel ?? true;
+
+  if (shouldSendPixel && typeof window !== "undefined" && (window as any).fbq) {
     (window as any).fbq("track", opts.eventName, {
       ...opts.customData,
       event_id: eventId, // deduplicação Pixel x CAPI
