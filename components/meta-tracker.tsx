@@ -25,6 +25,14 @@ export function MetaTracker() {
   const searchParams = useSearchParams();
 
   useEffect(() => {
+    // Deduplica PageView: garante apenas uma ativação do pixel por sessão/navegação
+    if (typeof window !== "undefined" && (window as any).__META_PAGEVIEW_TRACKED) {
+      return;
+    }
+    if (typeof window !== "undefined") {
+      (window as any).__META_PAGEVIEW_TRACKED = true;
+    }
+
     const url = window.location.href;
     const fbp = getFbp();
     const fbc = getFbc();
@@ -32,7 +40,7 @@ export function MetaTracker() {
       eventName: "PageView",
       eventSourceUrl: url,
       userData: { fbp, fbc },
-      sendPixel: false,
+      sendPixel: true,
     });
   }, [pathname, searchParams]);
 
