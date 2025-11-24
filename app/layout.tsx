@@ -6,7 +6,6 @@ import Script from "next/script";
 import { LeadModalProvider } from "../components/lead-modal-wizard";
 import { CookieConsent } from "../components/cookie-consent";
 import { Header } from "../components/header";
-import { MetaTracker } from "../components/meta-tracker";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {
@@ -116,9 +115,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <LeadModalProvider>
           <Header />
           {children}
-          <Suspense fallback={null}>
-            <MetaTracker />
-          </Suspense>
         </LeadModalProvider>
         <CookieConsent />
       </body>
