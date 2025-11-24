@@ -81,7 +81,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               id="meta-pixel"
               dangerouslySetInnerHTML={{
                 __html: `
-                  if (!window.__META_PIXEL_LOADED) {
+                  // Evita duplicidade: não injeta se o Pixel já veio via GTM ou outro loader
+                  if (!window.__META_PIXEL_LOADED && !window.fbq) {
                     window.__META_PIXEL_LOADED = true;
                     !function(f,b,e,v,n,t,s)
                     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
