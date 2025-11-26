@@ -34,8 +34,11 @@ export interface SendMetaEventParams {
   testEventCode?: string;
 }
 
-export async function sendMetaEvent(params: SendMetaEventParams): Promise<void> {
-  if (!META_PIXEL_ID || !META_PIXEL_ACCESS_TOKEN) return;
+export async function sendMetaEvent(params: SendMetaEventParams): Promise<boolean> {
+  if (!META_PIXEL_ID || !META_PIXEL_ACCESS_TOKEN) {
+    console.error("[Meta CAPI] Missing PIXEL_ID or ACCESS_TOKEN");
+    return false;
+  }
 
   const event_time = params.eventTime ?? Math.floor(Date.now() / 1000);
   const event_id = params.eventId ?? crypto.randomUUID();
@@ -63,14 +66,16 @@ export async function sendMetaEvent(params: SendMetaEventParams): Promise<void> 
         body: JSON.stringify(body),
       }
     );
-    if (!res.ok && process.env.NODE_ENV !== "production") {
-      console.error("Meta CAPI error", res.status, await res.text());
-    } else if (process.env.NODE_ENV !== "production") {
-      console.log("Meta CAPI ok", await res.text());
+    const text = await res.text();
+    if (!res.ok) {
+      console.error("[Meta CAPI] Error", res.status, text);
+      return false;
+    } else if (process.env.META_CAPI_DEBUG === "true" || process.env.NODE_ENV !== "production") {
+      console.log("[Meta CAPI] OK", text);
     }
+    return true;
   } catch (err) {
-    if (process.env.NODE_ENV !== "production") {
-      console.error("Meta CAPI exception", err);
-    }
+    console.error("[Meta CAPI] Exception", err);
+    return false;
   }
 }

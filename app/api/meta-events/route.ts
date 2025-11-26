@@ -70,7 +70,7 @@ export async function POST(req: NextRequest) {
     if (normalized) userData.ph = sha256(normalized);
   }
 
-  await sendMetaEvent({
+  const ok = await sendMetaEvent({
     eventName: payload.eventName,
     eventId: payload.eventId,
     eventSourceUrl: payload.eventSourceUrl,
@@ -79,5 +79,5 @@ export async function POST(req: NextRequest) {
     customData: payload.customData,
   });
 
-  return NextResponse.json({ success: true });
+  return NextResponse.json({ success: ok });
 }
