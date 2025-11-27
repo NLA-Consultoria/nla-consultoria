@@ -58,6 +58,22 @@ export function LeadModalProvider({ children }: { children: React.ReactNode }) {
 
   const value = useMemo(() => ({ open }), [open]);
 
+  function getCookie(name: string) {
+    if (typeof document === "undefined") return undefined;
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop()?.split(";").shift();
+    return undefined;
+  }
+
+  function getFbp() {
+    return getCookie("_fbp");
+  }
+
+  function getFbc() {
+    return getCookie("_fbc");
+  }
+
   useEffect(() => {
     async function fetchCities(state: string) {
       if (!state) { setCities([]); return; }
@@ -129,6 +145,20 @@ export function LeadModalProvider({ children }: { children: React.ReactNode }) {
       trackMetaEvent({
         eventName: "Lead",
         eventSourceUrl: typeof window !== "undefined" ? window.location.href : undefined,
+        userData: {
+          email: payload.email,
+          phone: payload.phone,
+          fbp: typeof window !== "undefined" ? getFbp() : undefined,
+          fbc: typeof window !== "undefined" ? getFbc() : undefined,
+          external_id: payload.email || undefined,
+        },
+        customData: {
+          company: payload.company,
+          uf: payload.uf,
+          city: payload.city,
+          billing: payload.billing,
+          soldToGov: payload.soldToGov,
+        },
       });
 
       setIsOpen(false);
