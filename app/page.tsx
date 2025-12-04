@@ -5,7 +5,6 @@ import { Why } from "../components/why";
 import { How } from "../components/how";
 import { Benefits } from "../components/benefits";
 import { Audience } from "../components/audience";
-import { Testimonials } from "../components/testimonials";
 import { FAQ } from "../components/faq";
 import { CtaFinal } from "../components/cta-final";
 import { Footer } from "../components/footer";
@@ -22,7 +21,6 @@ export default function Page() {
       <How />
       <Benefits />
       <Audience />
-      <Testimonials />
       <FAQ />
       <CtaFinal />
       <Footer />

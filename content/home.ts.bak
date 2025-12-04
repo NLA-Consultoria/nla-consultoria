@@ -8,6 +8,7 @@ export const content = {
       { href: "#como-funciona", label: "Como funciona" },
       { href: "#recebe", label: "O que você recebe" },
       { href: "#para-quem", label: "Para quem é" },
+      { href: "#depoimentos", label: "Depoimentos" },
       { href: "#faq", label: "FAQ" },
       { href: "#contato", label: "Contato" },
     ],
@@ -79,7 +80,12 @@ export const content = {
       "Quem quer operar fora de conformidade.",
     ],
   },
-{ nome: "Nome Sobrenome", cargo: "Cargo", frase: "frase curta" },
+  depoimentos: {
+    // PASTE COPY HERE — DEPOIMENTOS (placeholders)
+    title: "Depoimentos",
+    items: [
+      { nome: "Nome Sobrenome", cargo: "Cargo", frase: "frase curta" },
+      { nome: "Nome Sobrenome", cargo: "Cargo", frase: "frase curta" },
     ],
   },
   faq: {
@@ -119,7 +125,7 @@ export const content = {
     email: "licitacoes@nlaconsultoria.com.br",
     whatsappDisplay: "(62) 98405-9504",
     cidadeUf: "Goiânia/GO",
-    cnpj: "CNPJ 55.733.490/0001-27",
+    cnpj: "CNPJ 00.000.000/0000-00",
     privacyUrl: "#",
     termsUrl: "#",
   },
