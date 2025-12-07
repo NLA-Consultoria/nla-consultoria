@@ -7,8 +7,8 @@ import { useLeadModal } from "./lead-modal-wizard";
 export function How() {
   const { open } = useLeadModal();
   return (
-    <section id="como-funciona" className="container py-16 scroll-mt-24">
-      <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+    <section id="como-funciona" className="container py-16 scroll-mt-24 text-center">
+      <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl text-center">
         {content.comoFunciona.title}
       </h2>
       <ol className="mt-6 grid gap-4 sm:grid-cols-3">
@@ -19,7 +19,7 @@ export function How() {
           </li>
         ))}
       </ol>
-      <div className="mt-8">
+      <div className="mt-8 flex justify-center">
         <Button onClick={open}>{content.comoFunciona.cta}</Button>
       </div>
     </section>

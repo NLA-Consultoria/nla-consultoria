@@ -9,29 +9,29 @@ export function Hero() {
   return (
     <section className="container py-16 sm:py-24">
       <div className="grid items-center gap-8 md:grid-cols-2">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight sm:text-5xl">
+        <div className="flex flex-col items-center text-center">
+          <h1 className="text-3xl font-bold tracking-tight sm:text-5xl text-center">
             {content.hero.title}
           </h1>
-          <p className="mt-4 text-lg text-muted-foreground">
+          <p className="mt-4 text-lg text-muted-foreground text-center">
             {content.hero.subtitle}
           </p>
           {content.hero.proofs?.length > 0 && (
-            <div className="mt-6 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-2 text-sm text-muted-foreground">
               {content.hero.proofs.map((p, i) => (
                 <span key={i} className="flex items-center gap-2">
                   <span>{p}</span>
-                  {i < content.hero.proofs.length - 1 && <span className="opacity-50">•</span>}
+                  {i < content.hero.proofs.length - 1 && <span className="opacity-50">|</span>}
                 </span>
               ))}
             </div>
           )}
-          <div className="mt-8 flex gap-3">
+          <div className="mt-8 flex w-full justify-center gap-3">
             <Button size="lg" onClick={open}>{content.hero.cta}</Button>
           </div>
         </div>
         <div className="relative h-56 w-full sm:h-72 md:h-80">
-          {/* Ilustração leve (SVG) */}
+          {/* Ilustracao leve (SVG) */}
           <svg viewBox="0 0 400 300" className="h-full w-full" aria-hidden="true">
             <defs>
               <linearGradient id="g" x1="0" x2="1">

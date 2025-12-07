@@ -2,8 +2,8 @@ import { content } from "../content/home";
 
 export function FAQ() {
   return (
-    <section id="faq" className="container py-16 scroll-mt-24">
-      <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+    <section id="faq" className="container py-16 scroll-mt-24 text-center">
+      <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl text-center">
         {content.faq.title}
       </h2>
       <div className="mt-6 grid gap-4">

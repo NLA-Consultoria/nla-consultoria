@@ -1,5 +1,5 @@
 // Arquivo de conteúdo principal da Landing Page
-// PASTE COPY HERE: edite os textos abaixo conforme sua necessidade
+// Edite os textos conforme necessidade
 
 export const content = {
   nav: {
@@ -14,16 +14,13 @@ export const content = {
     cta: "Agendar minha reunião",
   },
   hero: {
-    // PASTE COPY HERE — HERO
-    title:
-      "Aumente suas vendas — agora com o maior comprador do Brasil.",
+    title: "Aumente suas vendas — agora com o maior comprador do Brasil.",
     subtitle:
       "Se você já pensou em vender para prefeituras e governo, mas nunca tirou do papel, nós abrimos esse canal de receita para você: oportunidades certas, documentos no ponto e acompanhamento até a assinatura — sem caos interno.",
     proofs: [],
     cta: "Agendar minha reunião",
   },
   porque: {
-    // PASTE COPY HERE — POR QUE VENDER
     title: "Por que vender para o maior comprador do país",
     bullets: [
       "Demanda constante: compras públicas acontecem o ano todo.",
@@ -34,7 +31,6 @@ export const content = {
     cta: "Quero abrir esse canal de vendas",
   },
   comoFunciona: {
-    // PASTE COPY HERE — COMO FUNCIONA
     title: "Como funciona",
     steps: [
       {
@@ -53,7 +49,6 @@ export const content = {
     cta: "Agendar minha reunião",
   },
   recebe: {
-    // PASTE COPY HERE — O QUE VOCÊ RECEBE
     title: "O que você recebe",
     bullets: [
       "Oportunidades certas (por segmento/UF) com resumo em linguagem simples.",
@@ -66,7 +61,6 @@ export const content = {
       "Não prometemos vitória. Entregamos processo, critérios e prazos para você competir com segurança e decidir onde faz sentido entrar.",
   },
   publico: {
-    // PASTE COPY HERE — PARA QUEM É
     title: "Para quem é / Para quem não é",
     isFor: [
       "Empresas que já vendem para o privado e querem abrir uma frente estável com o setor público.",
@@ -79,11 +73,7 @@ export const content = {
       "Quem quer operar fora de conformidade.",
     ],
   },
-{ nome: "Nome Sobrenome", cargo: "Cargo", frase: "frase curta" },
-    ],
-  },
   faq: {
-    // PASTE COPY HERE — FAQ
     title: "Perguntas frequentes",
     items: [
       {
@@ -109,13 +99,10 @@ export const content = {
     ],
   },
   ctaFinal: {
-    // PASTE COPY HERE — CTA FINAL
-    title:
-      "Abra uma nova frente de vendas com o maior e mais rico comprador do Brasil.",
+    title: "Abra uma nova frente de vendas com o maior e mais rico comprador do Brasil.",
     cta: "Agendar minha reunião",
   },
   footer: {
-    // PASTE COPY HERE — RODAPÉ (contato)
     email: "licitacoes@nlaconsultoria.com.br",
     whatsappDisplay: "(62) 98405-9504",
     cidadeUf: "Goiânia/GO",
