@@ -6,7 +6,7 @@ export function Audience() {
   const { open } = useLeadModal();
 
   return (
-    <section id="para-quem" className="container py-16 scroll-mt-24">
+    <section id="para-quem" className="container py-16 scroll-mt-24" data-animate="fade">
       <div className="rounded-xl border-2 border-primary/60 p-6 sm:p-8 dark:border-white">
         <div className="grid gap-6 sm:grid-cols-2">
           <div>

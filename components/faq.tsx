@@ -2,7 +2,7 @@ import { content } from "../content/home";
 
 export function FAQ() {
   return (
-    <section id="faq" className="container py-16 scroll-mt-24 text-center">
+    <section id="faq" className="container py-16 scroll-mt-24 text-center" data-animate="fade">
       <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl text-center">
         {content.faq.title}
       </h2>

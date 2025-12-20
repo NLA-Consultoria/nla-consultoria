@@ -32,7 +32,7 @@ export function Benefits() {
     .filter(Boolean) as string[];
 
   return (
-    <section id="recebe" className="container py-16 scroll-mt-24 text-center">
+    <section id="recebe" className="container py-16 scroll-mt-24 text-center" data-animate="fade">
       <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl text-center">
         {content.recebe.title}
       </h2>

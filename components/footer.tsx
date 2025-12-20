@@ -4,7 +4,7 @@ import { env } from "../lib/env";
 
 export function Footer() {
   return (
-    <footer id="contato" className="border-t py-10">
+    <footer id="contato" className="border-t py-10" data-animate="fade">
       <div className="container grid gap-6 sm:grid-cols-2">
         <div>
           <p className="font-semibold">Contato</p>
@@ -30,4 +30,3 @@ export function Footer() {
     </footer>
   );
 }
-

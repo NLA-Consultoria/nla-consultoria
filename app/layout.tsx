@@ -8,6 +8,7 @@ import { CookieConsent } from "../components/cookie-consent";
 import { Header } from "../components/header";
 import { Suspense } from "react";
 import { MetaTracker } from "../components/meta-tracker";
+import { FadeOnScroll } from "../components/fade-on-scroll";
 
 export const metadata: Metadata = {
   title: defaultSEO.title,
@@ -36,14 +37,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <head>
-        {/* Define tema inicial baseado no localStorage */}
+        {/* Tema fixo claro */}
         <Script id="theme-init" strategy="beforeInteractive">{`
-          try {
-            var ls = localStorage.getItem('theme');
-            var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-            var theme = ls ? ls : (prefersDark ? 'dark' : 'light');
-            document.documentElement.classList.toggle('dark', theme === 'dark');
-          } catch {}
+          document.documentElement.classList.remove('dark');
         `}</Script>
         {/* Fontes para a logo: Libre Baskerville e Inter */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -115,6 +111,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <LeadModalProvider>
+          <FadeOnScroll />
           <Header />
           {children}
           <Suspense fallback={null}>

@@ -7,7 +7,7 @@ import { useLeadModal } from "./lead-modal-wizard";
 export function CtaFinal() {
   const { open } = useLeadModal();
   return (
-    <section className="container py-16">
+    <section className="container py-16" data-animate="fade">
       <div className="rounded-xl border bg-card p-8 text-center">
         <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
           {content.ctaFinal.title}
