@@ -103,11 +103,43 @@ import { content } from "@/content/home";
 import { env } from "@/lib/env";
 ```
 
+## Logging
+
+**Custom Startup Script** (`scripts/start.js`):
+- Shows environment info (DEV/PROD), git version, commit SHA, and date
+- Displays configuration summary when `LOG_LEVEL=debug`
+- Supports log levels: `debug | info | warn | error`
+
+**Log Levels**:
+- `debug` — Full logs with environment configuration (recommended for DEV)
+- `info` — Basic startup information (recommended for PROD)
+- `warn` — Warnings and errors only
+- `error` — Errors only
+
+**Configuration**:
+```bash
+# .env.local or docker-compose
+LOG_LEVEL=debug  # or info, warn, error
+```
+
+The startup script runs before Next.js and shows:
+- Environment (PRODUCTION/DEVELOPMENT)
+- Version from package.json
+- Git branch, commit SHA, and date
+- Node version
+- Analytics/webhook configuration status
+
 ## Deployment
 
 **Docker**: Dockerfile uses Next.js standalone output mode (`next.config.mjs`).
 
-**Easypanel/Docker Compose**: See `deploy/stack-easypanel.yml` for production container config. Exposes port 3000 internally, mapped to 80 externally.
+**Environments**:
+- **Production** (`deploy/stack-easypanel.yml`): Port 80:3000, `LOG_LEVEL=info`
+- **Development** (`deploy/stack-dev.yml`): Port 8081:3000, `LOG_LEVEL=debug`
+
+**Environment Variables**:
+- Build-time: `NEXT_PUBLIC_*` variables (require rebuild to change)
+- Runtime: `LOG_LEVEL`, `META_PIXEL_*` (can change without rebuild)
 
 ## Important Notes
 

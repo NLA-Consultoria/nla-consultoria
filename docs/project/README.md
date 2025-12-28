@@ -35,6 +35,24 @@ Documentação da estrutura de pastas do projeto:
 - Localização de arquivos chave
 - Padrões de código
 
+### [LOGGING.md](./LOGGING.md)
+**Sistema de Logging**
+
+Sistema customizado de logs com informações de ambiente:
+- Níveis de log (debug, info, warn, error)
+- Script de inicialização customizado
+- Informações de versão e commit Git
+- Monitoramento de configurações
+
+### [DEPLOYMENT-DEV.md](./DEPLOYMENT-DEV.md)
+**Deployment - Ambiente DEV**
+
+Guia completo para deploy do ambiente de desenvolvimento:
+- Configuração de variáveis DEV_*
+- Workflow automático de CI/CD
+- Docker image: dev-latest
+- Troubleshooting
+
 ---
 
 ## 🎯 Para Novos Desenvolvedores

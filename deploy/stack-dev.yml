@@ -28,6 +28,9 @@ services:
       META_PIXEL_ID: ""
       META_PIXEL_ACCESS_TOKEN: ""
       META_PIXEL_TEST_EVENT_CODE: ""
+
+      # Logging (runtime - pode mudar sem rebuild)
+      LOG_LEVEL: "debug"  # debug | info | warn | error (debug recomendado para DEV)
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.nla-dev.rule=Host(`dev.licitacoes.nlaconsultoria.com.br`)"
