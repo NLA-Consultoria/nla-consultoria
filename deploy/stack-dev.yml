@@ -16,8 +16,10 @@ services:
       # Analytics (pode usar IDs de teste)
       NEXT_PUBLIC_GTM_ID: ""
       NEXT_PUBLIC_POSTHOG_KEY: ""
-      NEXT_PUBLIC_CLARITY_ID: "uscdlda0qf"  # Mesmo ID ou criar projeto separado
       NEXT_PUBLIC_META_PIXEL_ID: ""
+
+      # Clarity (runtime - pode mudar sem rebuild)
+      CLARITY_ID: "uscdlda0qf"  # Mesmo ID ou criar projeto separado
 
       # Integrations (pode usar webhooks de teste)
       NEXT_PUBLIC_AGENDA_URL: ""
