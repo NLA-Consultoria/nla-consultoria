@@ -76,7 +76,17 @@ Copy `.env.example` to `.env.local` and configure:
 - Meta Pixel injected in `layout.tsx` with deduplication check (`window.__META_PIXEL_LOADED`)
 - GTM or PostHog loaded conditionally based on env vars
 - Microsoft Clarity for behavior analytics (heatmaps, session recordings)
+  - Custom events tracking: CTA clicks, form interactions, conversions
+  - Session tagging: lead qualification, conversion status, user behavior
+  - User identification: links Clarity sessions to converted leads
 - Meta Conversions API used for server-side event tracking (better iOS14+ tracking)
+
+**Clarity Event Tracking** (`lib/clarity-events.ts`):
+- **CTA Events**: Tracks all CTA clicks by location (hero, header, why_section, how_section, final_cta)
+- **Form Funnel**: Tracks form_opened, step completions, step backs, abandonments, submit success/error
+- **Lead Qualification**: Tags sessions with billing range, gov experience, state
+- **User Identification**: Associates Clarity sessions with email/company after conversion
+- All events designed to identify conversion friction points and optimize funnel
 
 **Styling**: Tailwind CSS with custom config in `tailwind.config.ts`. Theme switching removed (light theme only, controlled via `theme-init` script in layout).
 
