@@ -9,6 +9,34 @@ Projeto Next.js (App Router) com TypeScript, Tailwind e componentes shadcn/ui m�
 - Dev: `npm run dev`
 - Build: `npm run build` e `npm start`
 
+## Deploy Automático (DEV)
+
+Script que automatiza todo o fluxo de deploy no ambiente de desenvolvimento:
+
+```bash
+# Deploy completo (commit, push, aguarda build, trigger Easypanel, verifica site)
+npm run deploy:dev
+
+# Com mensagem de commit customizada
+npm run deploy:dev "feat: nova funcionalidade"
+
+# Com flags opcionais
+npm run deploy:dev -- --fast        # aguarda 2min em vez de 3min
+npm run deploy:dev -- --skip-build  # pula aguardar build
+npm run deploy:dev -- --no-verify   # não faz health check
+```
+
+**O que o script faz:**
+1. Verifica se está na branch `dev`
+2. Commit e push (se houver mudanças)
+3. Aguarda GitHub Actions buildar imagem Docker (~3min)
+4. Trigger deploy no Easypanel via webhook
+5. Aguarda container reiniciar (~1min)
+6. Verifica se site está online
+7. Mostra resumo com URLs e próximos passos
+
+Ver documentação completa em: `docs/project/DEPLOY-AUTOMATION.md`
+
 ## Variáveis de ambiente
 
 Copie `.env.example` para `.env.local` e preencha conforme necessário:

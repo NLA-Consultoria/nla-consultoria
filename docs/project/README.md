@@ -53,6 +53,15 @@ Guia completo para deploy do ambiente de desenvolvimento:
 - Docker image: dev-latest
 - Troubleshooting
 
+### [DEPLOY-AUTOMATION.md](./DEPLOY-AUTOMATION.md)
+**Deploy Automation - Script Automático**
+
+Script que automatiza deploy completo no ambiente DEV:
+- Commit, push, aguarda build, trigger deploy, verifica site
+- Comando: `npm run deploy:dev`
+- Flags opcionais: --fast, --skip-build, --no-verify
+- Output colorizado com progresso em tempo real
+
 ---
 
 ## 🎯 Para Novos Desenvolvedores

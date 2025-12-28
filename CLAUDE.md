@@ -23,6 +23,11 @@ npm start
 
 # Lint
 npm run lint
+
+# Deploy automático no ambiente DEV (commit, push, aguarda build, trigger Easypanel, verifica)
+npm run deploy:dev
+npm run deploy:dev "mensagem de commit customizada"
+npm run deploy:dev -- --fast --no-verify  # flags opcionais
 ```
 
 ## Environment Variables

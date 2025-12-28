@@ -48,3 +48,6 @@ jobs:
             NEXT_PUBLIC_WHATSAPP_URL=${{ vars.DEV_NEXT_PUBLIC_WHATSAPP_URL }}
             NEXT_PUBLIC_N8N_WEBHOOK_URL=${{ vars.DEV_NEXT_PUBLIC_N8N_WEBHOOK_URL }}
             NEXT_PUBLIC_META_PIXEL_ID=${{ vars.DEV_NEXT_PUBLIC_META_PIXEL_ID }}
+            GIT_SHA=${{ github.sha }}
+            GIT_BRANCH=${{ github.ref_name }}
+            GIT_DATE=${{ github.event.head_commit.timestamp }}

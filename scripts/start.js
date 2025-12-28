@@ -43,7 +43,11 @@ function getGitInfo() {
     const date = execSync('git log -1 --format=%cd --date=short', { encoding: 'utf8' }).trim();
     return { sha, branch, date };
   } catch (error) {
-    return { sha: 'unknown', branch: 'unknown', date: 'unknown' };
+    // Fallback para variáveis de ambiente (Docker build args)
+    const sha = process.env.GIT_SHA ? process.env.GIT_SHA.substring(0, 7) : 'unknown';
+    const branch = process.env.GIT_BRANCH || 'unknown';
+    const date = process.env.GIT_DATE ? process.env.GIT_DATE.split('T')[0] : 'unknown';
+    return { sha, branch, date };
   }
 }
 

@@ -46,3 +46,6 @@ jobs:
             NEXT_PUBLIC_AGENDA_URL=${{ vars.NEXT_PUBLIC_AGENDA_URL }}
             NEXT_PUBLIC_WHATSAPP_URL=${{ vars.NEXT_PUBLIC_WHATSAPP_URL }}
             NEXT_PUBLIC_N8N_WEBHOOK_URL=${{ vars.NEXT_PUBLIC_N8N_WEBHOOK_URL }}
+            GIT_SHA=${{ github.sha }}
+            GIT_BRANCH=${{ github.ref_name }}
+            GIT_DATE=${{ github.event.head_commit.timestamp }}

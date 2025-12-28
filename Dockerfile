@@ -17,8 +17,10 @@ FROM node:20-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 
-# Instala git para obter info de versão (leve)
-RUN apk add --no-cache git
+# Build args para informações de git (passados pelo GitHub Actions)
+ARG GIT_SHA=unknown
+ARG GIT_BRANCH=unknown
+ARG GIT_DATE=unknown
 
 # Copia o bundle standalone do Next
 COPY --from=builder /app/.next/standalone ./
@@ -28,7 +30,12 @@ COPY --from=builder /app/public ./public
 # Copia arquivos necessários para logging
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/scripts ./scripts
-COPY --from=builder /app/.git ./.git
+
+# Cria arquivo fake .git/HEAD para o script ler
+RUN mkdir -p .git && \
+    echo "ref: refs/heads/${GIT_BRANCH}" > .git/HEAD && \
+    echo "${GIT_SHA}" > .git/refs_heads_${GIT_BRANCH} && \
+    echo "${GIT_DATE}" > .git/commit_date
 
 # Expõe e **força** bind correto
 ENV PORT=3000
@@ -37,6 +44,11 @@ EXPOSE 3000
 
 # Default log level (pode ser sobrescrito via docker-compose)
 ENV LOG_LEVEL=info
+
+# Variáveis de ambiente com git info (fallback se script não conseguir ler)
+ENV GIT_SHA=${GIT_SHA}
+ENV GIT_BRANCH=${GIT_BRANCH}
+ENV GIT_DATE=${GIT_DATE}
 
 # Sobe com script customizado que chama server.js
 CMD ["node", "scripts/start.js"]

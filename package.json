@@ -6,7 +6,8 @@
     "dev": "node scripts/start.js",
     "build": "next build",
     "start": "NODE_ENV=production node scripts/start.js -p 3000",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy:dev": "node scripts/deploy-dev.js"
   },
   "dependencies": {
     "@microsoft/clarity": "^1.0.2",
