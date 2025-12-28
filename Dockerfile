@@ -16,15 +16,33 @@ RUN npm run build
 FROM node:20-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
+
+# Build args para informações de git (passados pelo GitHub Actions)
+ARG GIT_SHA=unknown
+ARG GIT_BRANCH=unknown
+ARG GIT_DATE=unknown
+
 # Copia o bundle standalone do Next
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
+
+# Copia arquivos necessários para logging
+COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/scripts ./scripts
 
 # Expõe e **força** bind correto
 ENV PORT=3000
 ENV HOST=0.0.0.0
 EXPOSE 3000
 
-# Sobe o server standalone do Next
-CMD ["node", "server.js"]
+# Default log level (pode ser sobrescrito via docker-compose)
+ENV LOG_LEVEL=info
+
+# Variáveis de ambiente com git info (fallback se script não conseguir ler)
+ENV GIT_SHA=${GIT_SHA}
+ENV GIT_BRANCH=${GIT_BRANCH}
+ENV GIT_DATE=${GIT_DATE}
+
+# Sobe com script customizado que chama server.js
+CMD ["node", "scripts/start.js"]

@@ -1,0 +1,41 @@
+version: "3.8"
+services:
+  nla-portal-dev:
+    image: ghcr.io/nla-consultoria/nla-portal:dev-latest
+    container_name: nla-portal-dev
+    restart: unless-stopped
+    ports:
+      - "8081:3000"  # Porta diferente da produção (80:3000) e Evolution (8080)
+    environment:
+      # ATENÇÃO: Variáveis NEXT_PUBLIC_* são incorporadas no build.
+      # Para refletir mudanças, gere uma nova imagem (push na branch dev).
+
+      # URL do ambiente de desenvolvimento
+      NEXT_PUBLIC_SITE_URL: https://dev.licitacoes.nlaconsultoria.com.br
+
+      # Analytics (pode usar IDs de teste)
+      NEXT_PUBLIC_GTM_ID: ""
+      NEXT_PUBLIC_POSTHOG_KEY: ""
+      NEXT_PUBLIC_META_PIXEL_ID: ""
+
+      # Clarity (runtime - pode mudar sem rebuild)
+      CLARITY_ID: "uscdlda0qf"  # Mesmo ID ou criar projeto separado
+
+      # Integrations (pode usar webhooks de teste)
+      NEXT_PUBLIC_AGENDA_URL: ""
+      NEXT_PUBLIC_WHATSAPP_URL: "https://wa.me/556299696842?text=Teste%20DEV"
+      NEXT_PUBLIC_N8N_WEBHOOK_URL: "https://n8n.nlaconsultoria.com.br/webhook-test/dev-test"
+
+      # Meta Pixel (server-side)
+      META_PIXEL_ID: ""
+      META_PIXEL_ACCESS_TOKEN: ""
+      META_PIXEL_TEST_EVENT_CODE: ""
+
+      # Logging (runtime - pode mudar sem rebuild)
+      LOG_LEVEL: "debug"  # debug | info | warn | error (debug recomendado para DEV)
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nla-dev.rule=Host(`dev.licitacoes.nlaconsultoria.com.br`)"
+      - "traefik.http.routers.nla-dev.entrypoints=websecure"
+      - "traefik.http.routers.nla-dev.tls.certresolver=letsencrypt"
+      - "traefik.http.services.nla-dev.loadbalancer.server.port=3000"

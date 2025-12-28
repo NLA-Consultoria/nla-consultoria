@@ -15,4 +15,10 @@ services:
       NEXT_PUBLIC_AGENDA_URL: ""
       NEXT_PUBLIC_WHATSAPP_URL: ""
       NEXT_PUBLIC_N8N_WEBHOOK_URL: https://n8n.nlaconsultoria.com.br/webhook/3761388d-abd3-489c-9800-eb843058f504
+
+      # Analytics runtime (pode mudar sem rebuild)
+      CLARITY_ID: ""  # Microsoft Clarity Project ID
+
+      # Logging (runtime - pode mudar sem rebuild)
+      LOG_LEVEL: "info"  # debug | info | warn | error
     # volumes: []  # app é estático; sem necessidade de volumes

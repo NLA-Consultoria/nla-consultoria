@@ -3,10 +3,11 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "dev": "next dev",
+    "dev": "node scripts/start.js",
     "build": "next build",
-    "start": "next start -p 3000",
-    "lint": "next lint"
+    "start": "NODE_ENV=production node scripts/start.js -p 3000",
+    "lint": "next lint",
+    "deploy:dev": "node scripts/deploy-dev.js"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.0.5",
@@ -31,4 +32,3 @@
     "typescript": "5.4.5"
   }
 }
-
