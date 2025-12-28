@@ -3,9 +3,16 @@
 import { content } from "../content/home";
 import { Button } from "./ui/button";
 import { useLeadModal } from "./lead-modal-wizard";
+import { trackCtaClick } from "../lib/clarity-events";
 
 export function Hero() {
   const { open } = useLeadModal();
+
+  const handleCtaClick = () => {
+    trackCtaClick("hero");
+    open();
+  };
+
   return (
     <section className="container py-16 sm:py-24" data-animate="fade">
       <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 text-center">
@@ -26,7 +33,7 @@ export function Hero() {
           </div>
         )}
         <div className="mt-6 flex w-full justify-center gap-3">
-          <Button size="lg" onClick={open}>{content.hero.cta}</Button>
+          <Button size="lg" onClick={handleCtaClick}>{content.hero.cta}</Button>
         </div>
       </div>
     </section>

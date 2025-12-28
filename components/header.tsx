@@ -5,9 +5,16 @@ import { content } from "../content/home";
 import { Button } from "./ui/button";
 import { useLeadModal } from "./lead-modal-wizard";
 import LogoV8 from "./logo-v8";
+import { trackCtaClick } from "../lib/clarity-events";
 
 export function Header() {
   const { open } = useLeadModal();
+
+  const handleCtaClick = () => {
+    trackCtaClick("header");
+    open();
+  };
+
   return (
     <header className="sticky top-0 z-30 w-full border-b bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between gap-4">
@@ -26,7 +33,7 @@ export function Header() {
           ))}
         </nav>
         <div className="flex items-center gap-2">
-          <Button className="hidden md:inline-flex" onClick={open}>{content.nav.cta}</Button>
+          <Button className="hidden md:inline-flex" onClick={handleCtaClick}>{content.nav.cta}</Button>
         </div>
       </div>
     </header>

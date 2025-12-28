@@ -3,9 +3,16 @@
 import { content } from "../content/home";
 import { Button } from "./ui/button";
 import { useLeadModal } from "./lead-modal-wizard";
+import { trackCtaClick } from "../lib/clarity-events";
 
 export function Why() {
   const { open } = useLeadModal();
+
+  const handleCtaClick = () => {
+    trackCtaClick("why_section");
+    open();
+  };
+
   return (
     <section id="porque" className="container py-16 scroll-mt-24 text-center" data-animate="fade">
       <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl text-center">
@@ -19,7 +26,7 @@ export function Why() {
         ))}
       </ul>
       <div className="mt-8 flex justify-center">
-        <Button onClick={open}>{content.porque.cta}</Button>
+        <Button onClick={handleCtaClick}>{content.porque.cta}</Button>
       </div>
     </section>
   );

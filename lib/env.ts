@@ -4,6 +4,7 @@ export const env = {
   WHATSAPP_URL: process.env.NEXT_PUBLIC_WHATSAPP_URL || "",
   GTM_ID: process.env.NEXT_PUBLIC_GTM_ID || process.env.GTM_ID || "",
   POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY || "",
+  CLARITY_ID: process.env.NEXT_PUBLIC_CLARITY_ID || "",
   SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || "",
   META_PIXEL_ID:
     process.env.NEXT_PUBLIC_META_PIXEL_ID ||

@@ -8,6 +8,16 @@ import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 import { leadSchema, PHONE_MASK, type LeadData } from "../lib/validators";
 import { trackMetaEvent } from "../lib/trackMetaEvent";
+import {
+  trackFormOpen,
+  trackFormStepComplete,
+  trackFormStepBack,
+  trackFormAbandonment,
+  trackFormSubmitSuccess,
+  trackFormSubmitError,
+  trackLeadQualification,
+  identifyUser,
+} from "../lib/clarity-events";
 
 type LeadModalContextType = { open: () => void };
 const LeadModalContext = createContext<LeadModalContextType | null>(null);
@@ -54,6 +64,7 @@ export function LeadModalProvider({ children }: { children: React.ReactNode }) {
     setError(null);
     setIsOpen(true);
     setStep(1);
+    trackFormOpen();
   }, []);
 
   const value = useMemo(() => ({ open }), [open]);
@@ -112,6 +123,10 @@ export function LeadModalProvider({ children }: { children: React.ReactNode }) {
       return;
     }
     setError(null);
+
+    // Track step completion
+    trackFormStepComplete(step);
+
     setStep((s) => Math.min(3, s + 1));
   }
 
@@ -161,10 +176,24 @@ export function LeadModalProvider({ children }: { children: React.ReactNode }) {
         },
       });
 
+      // Track Clarity events
+      trackFormSubmitSuccess();
+      trackLeadQualification({
+        billing: payload.billing,
+        soldToGov: payload.soldToGov,
+        uf: payload.uf,
+      });
+      identifyUser(payload.email, {
+        name: payload.name,
+        company: payload.company,
+      });
+
       setIsOpen(false);
       setShowSuccessPopup(true);
     } catch (e: any) {
-      setError(e?.message || "Erro ao enviar. Tente novamente.");
+      const errorMsg = e?.message || "Erro ao enviar. Tente novamente.";
+      setError(errorMsg);
+      trackFormSubmitError(errorMsg);
     } finally {
       setLoading(false);
     }
@@ -173,7 +202,16 @@ export function LeadModalProvider({ children }: { children: React.ReactNode }) {
   return (
     <LeadModalContext.Provider value={value}>
       {children}
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <Dialog
+        open={isOpen}
+        onOpenChange={(open) => {
+          if (!open && step > 0 && step < 3) {
+            // Formulário fechado antes de completar
+            trackFormAbandonment(step);
+          }
+          setIsOpen(open);
+        }}
+      >
         <DialogContent aria-describedby="lead-desc">
           <DialogHeader>
             <DialogTitle>Agendar minha reunião</DialogTitle>
@@ -254,7 +292,7 @@ export function LeadModalProvider({ children }: { children: React.ReactNode }) {
             <div className="flex items-center justify-between">
               <p className="text-xs text-muted-foreground">Seus dados serão usados apenas para contato e agendamento.</p>
               <div className="flex gap-2">
-                {step > 1 && (<Button type="button" variant="outline" onClick={()=>setStep((s)=>Math.max(1,s-1))}>Voltar</Button>)}
+                {step > 1 && (<Button type="button" variant="outline" onClick={()=>{trackFormStepBack(step); setStep((s)=>Math.max(1,s-1));}}>Voltar</Button>)}
                 {step < 3 && (<Button type="button" onClick={nextStep}>Próximo</Button>)}
                 {step === 3 && (<Button type="submit" disabled={loading} aria-busy={loading}>{loading?"Enviando…":"Enviar"}</Button>)}
               </div>
