@@ -115,11 +115,20 @@ O script substitui o comando `next dev` ou `next start` padrão:
 
 ### 2. Fluxo de Execução
 
+**Desenvolvimento (local):**
 1. Script `start.js` é executado
 2. Lê variáveis de ambiente e git info
 3. Imprime banner com informações
-4. Spawna processo `next dev` ou `next start`
+4. Spawna processo `npx next dev`
 5. Repassa STDIO (logs do Next.js aparecem normalmente)
+
+**Produção (Docker standalone):**
+1. Container inicia com `CMD ["node", "scripts/start.js"]`
+2. Script lê variáveis de ambiente e git info (do .git copiado)
+3. Imprime banner com informações
+4. Detecta presença de `server.js` (standalone mode)
+5. Spawna processo `node server.js`
+6. Next.js standalone inicia e logs aparecem normalmente
 
 ### 3. Detecção de Ambiente
 

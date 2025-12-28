@@ -124,12 +124,21 @@ printStartupMessage();
 // Iniciar Next.js
 const { spawn } = require('child_process');
 const nextArgs = process.argv.slice(2); // Pega argumentos passados ao script
-const nextCommand = process.env.NODE_ENV === 'production' ? 'start' : 'dev';
 
-// Usa npx para garantir que next seja encontrado
-const nextProcess = spawn('npx', ['next', nextCommand, ...nextArgs], {
-  stdio: 'inherit',
-});
+let nextProcess;
+
+if (isProduction && fs.existsSync('server.js')) {
+  // Modo standalone (Docker): executa server.js diretamente
+  nextProcess = spawn('node', ['server.js', ...nextArgs], {
+    stdio: 'inherit',
+  });
+} else {
+  // Modo desenvolvimento ou produção sem standalone: usa next CLI
+  const nextCommand = isProduction ? 'start' : 'dev';
+  nextProcess = spawn('npx', ['next', nextCommand, ...nextArgs], {
+    stdio: 'inherit',
+  });
+}
 
 nextProcess.on('error', (error) => {
   console.error(colors.bright + colors.red + '✗ Failed to start Next.js:' + colors.reset, error);
