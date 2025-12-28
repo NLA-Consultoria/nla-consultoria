@@ -44,9 +44,15 @@ function getGitInfo() {
     return { sha, branch, date };
   } catch (error) {
     // Fallback para variáveis de ambiente (Docker build args)
-    const sha = process.env.GIT_SHA ? process.env.GIT_SHA.substring(0, 7) : 'unknown';
-    const branch = process.env.GIT_BRANCH || 'unknown';
-    const date = process.env.GIT_DATE ? process.env.GIT_DATE.split('T')[0] : 'unknown';
+    const envSha = process.env.GIT_SHA;
+    const envBranch = process.env.GIT_BRANCH;
+    const envDate = process.env.GIT_DATE;
+
+    // Valida se não é "undefined" (string) ou realmente undefined
+    const sha = (envSha && envSha !== 'undefined') ? envSha.substring(0, 7) : 'unknown';
+    const branch = (envBranch && envBranch !== 'undefined') ? envBranch : 'unknown';
+    const date = (envDate && envDate !== 'undefined') ? envDate.split('T')[0] : 'unknown';
+
     return { sha, branch, date };
   }
 }

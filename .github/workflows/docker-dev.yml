@@ -30,6 +30,12 @@ jobs:
       - name: Lowercase owner
         run: echo "OWNER_LC=${GITHUB_REPOSITORY_OWNER,,}" >> $GITHUB_ENV
 
+      # Prepara variáveis de git para build args
+      - name: Set git info
+        run: |
+          echo "GIT_SHA_SHORT=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
+          echo "GIT_DATE=$(date -u +%Y-%m-%d)" >> $GITHUB_ENV
+
       - name: Build and push (DEV)
         uses: docker/build-push-action@v6
         with:
@@ -48,6 +54,6 @@ jobs:
             NEXT_PUBLIC_WHATSAPP_URL=${{ vars.DEV_NEXT_PUBLIC_WHATSAPP_URL }}
             NEXT_PUBLIC_N8N_WEBHOOK_URL=${{ vars.DEV_NEXT_PUBLIC_N8N_WEBHOOK_URL }}
             NEXT_PUBLIC_META_PIXEL_ID=${{ vars.DEV_NEXT_PUBLIC_META_PIXEL_ID }}
-            GIT_SHA=${{ github.sha }}
+            GIT_SHA=${{ env.GIT_SHA_SHORT }}
             GIT_BRANCH=${{ github.ref_name }}
-            GIT_DATE=${{ github.event.head_commit.timestamp }}
+            GIT_DATE=${{ env.GIT_DATE }}

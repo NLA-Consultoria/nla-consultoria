@@ -31,12 +31,6 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/scripts ./scripts
 
-# Cria arquivo fake .git/HEAD para o script ler
-RUN mkdir -p .git && \
-    echo "ref: refs/heads/${GIT_BRANCH}" > .git/HEAD && \
-    echo "${GIT_SHA}" > .git/refs_heads_${GIT_BRANCH} && \
-    echo "${GIT_DATE}" > .git/commit_date
-
 # Expõe e **força** bind correto
 ENV PORT=3000
 ENV HOST=0.0.0.0
