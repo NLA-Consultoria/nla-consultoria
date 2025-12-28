@@ -5,7 +5,7 @@ services:
     container_name: nla-portal-dev
     restart: unless-stopped
     ports:
-      - "8080:3000"  # Porta diferente da produção (80:3000)
+      - "8081:3000"  # Porta diferente da produção (80:3000) e Evolution (8080)
     environment:
       # ATENÇÃO: Variáveis NEXT_PUBLIC_* são incorporadas no build.
       # Para refletir mudanças, gere uma nova imagem (push na branch dev).

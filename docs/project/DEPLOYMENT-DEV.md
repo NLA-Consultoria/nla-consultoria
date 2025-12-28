@@ -8,7 +8,7 @@ Guia completo para configurar e fazer deploy do ambiente de desenvolvimento (sta
 **Branch:** `dev`
 **URL:** https://dev.licitacoes.nlaconsultoria.com.br
 **Docker Image:** `ghcr.io/nla-consultoria/nla-portal:dev-latest`
-**Porta:** 8080 (mapeada para 3000 interno)
+**Porta:** 8081 (mapeada para 3000 interno)
 
 ---
 
@@ -19,7 +19,7 @@ Guia completo para configurar e fazer deploy do ambiente de desenvolvimento (sta
 | **Branch** | `main` | `dev` |
 | **URL** | licitacoes.nlaconsultoria.com.br | dev.licitacoes.nlaconsultoria.com.br |
 | **Docker Tag** | `:latest` | `:dev-latest` |
-| **Porta** | 80:3000 | 8080:3000 |
+| **Porta** | 80:3000 | 8081:3000 |
 | **Webhook** | N8N produção | N8N teste |
 | **Analytics** | IDs produção | IDs teste/separados |
 | **Deploy** | Manual/controlado | Automático (push dev) |
@@ -266,10 +266,10 @@ docker logs nla-portal-dev
 docker inspect nla-portal-dev | grep -A 20 Env
 
 # 3. Testar imagem manualmente
-docker run -p 8080:3000 ghcr.io/nla-consultoria/nla-portal:dev-latest
+docker run -p 8081:3000 ghcr.io/nla-consultoria/nla-portal:dev-latest
 
 # 4. Verificar porta não está em uso
-lsof -i :8080
+lsof -i :8081
 ```
 
 ### Deploy não Atualiza

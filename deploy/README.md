@@ -21,12 +21,12 @@ Configuração Docker Compose para ambiente de **produção**.
 **Branch:** `dev`
 **URL:** https://dev.licitacoes.nlaconsultoria.com.br
 **Docker Image:** `ghcr.io/nla-consultoria/nla-portal:dev-latest`
-**Porta:** 8080:3000
+**Porta:** 8081:3000
 
 Configuração Docker Compose para ambiente de **desenvolvimento/staging**.
 - Deploy automático ao push em `dev`
 - Usa variáveis prefixadas com `DEV_`
-- Porta 8080 (separada de produção)
+- Porta 8081 (separada de produção e Evolution)
 - Webhooks e analytics de teste
 
 ---
