@@ -303,11 +303,14 @@ export function trackQualifiedLead(
   return trackMetaEvent('QualifiedLead', {
     step_number: 3,
     step_name: 'qualification',
-    billing_range: billingRange,
-    gov_experience: govExperience,
+    billing_range: billingRange, // KEEP for backward compat
+    gov_experience: govExperience, // KEEP for backward compat
     source: 'lp-2',
     value: 500,
     currency: 'BRL',
+    // Structured custom_data (Meta best practice)
+    content_name: 'lead_qualification',
+    content_category: 'b2g_consulting',
   }, userData);
 }
 
@@ -316,14 +319,24 @@ export function trackQualifiedLead(
  *
  * @param userData - Deve incluir: email, phone, firstName, lastName, city, state
  */
-export function trackCompleteRegistration(userData: UserData): Promise<void> {
+export function trackCompleteRegistration(
+  userData: UserData,
+  billingRange?: string,
+  govExperience?: boolean,
+  painDescription?: string
+): Promise<void> {
   return trackMetaEvent(
     'CompleteRegistration',
     {
       content_name: 'lp-2_full_lead',
+      content_category: 'b2g_consulting',
       status: 'complete',
       value: 1000,
       currency: 'BRL',
+      // Business context
+      billing_range: billingRange,
+      gov_experience: govExperience,
+      pain_description: painDescription,
     },
     userData,
     true // standard event
@@ -339,14 +352,24 @@ export function trackCompleteRegistration(userData: UserData): Promise<void> {
  *
  * @param userData - Deve incluir: email, phone, firstName, lastName, city, state
  */
-export function trackLeadComplete(userData: UserData): Promise<void> {
+export function trackLeadComplete(
+  userData: UserData,
+  billingRange?: string,
+  govExperience?: boolean,
+  painDescription?: string
+): Promise<void> {
   return trackMetaEvent(
     'Lead', // Evento padrão Meta
     {
       content_name: 'lp-2_complete_lead',
+      content_category: 'b2g_consulting',
       status: 'complete',
       value: 1500,
       currency: 'BRL',
+      // Business context
+      billing_range: billingRange,
+      gov_experience: govExperience,
+      pain_description: painDescription,
     },
     userData,
     true // standard event
