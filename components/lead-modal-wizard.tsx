@@ -44,6 +44,7 @@ import {
   trackCompleteRegistration,
   trackLeadComplete,
   trackStepAbandoned,
+  splitFullName, // ADD THIS
 } from "../lib/meta-tracking";
 import { sendWebhookWithRetry, saveFailedWebhook, retryFailedWebhooks } from "../lib/webhook-retry";
 import { fetchCities, normalizeCityInput } from "../lib/ibge-cities";
@@ -378,9 +379,12 @@ function LeadModalExpressProvider({ children }: ProviderProps) {
         }).catch(err => {
           console.error('[Phone Field] ❌ ERRO CRÍTICO ao enviar webhook:', err);
         });
+        const { firstName, lastName } = splitFullName(debouncedName);
         trackPartialLead('phone', 50, {
+          email: debouncedEmail,
           phone: debouncedPhone,
-          firstName: debouncedName.split(' ')[0],
+          firstName,
+          lastName,
         });
       } else if (webhooksSent.has('phone')) {
         console.log('[Phone Field] Webhook já foi enviado anteriormente, pulando...');
@@ -407,10 +411,12 @@ function LeadModalExpressProvider({ children }: ProviderProps) {
         }).catch(err => {
           console.error('[Email Field] ❌ Erro ao enviar webhook:', err);
         });
+        const { firstName, lastName } = splitFullName(debouncedName);
         trackPartialLead('email', 100, {
           email: debouncedEmail,
           phone: debouncedPhone,
-          firstName: debouncedName.split(' ')[0],
+          firstName,
+          lastName,
         });
       } else if (webhooksSent.has('email')) {
         console.log('[Email Field] Webhook já foi enviado anteriormente, pulando...');
@@ -567,10 +573,12 @@ function LeadModalExpressProvider({ children }: ProviderProps) {
         });
 
         // Track QualifiedLead na Meta
+        const { firstName, lastName } = splitFullName(debouncedName);
         trackQualifiedLead(debouncedBilling, debouncedSoldToGov === 'sim', {
           email: debouncedEmail,
           phone: debouncedPhone,
-          firstName: debouncedName.split(' ')[0],
+          firstName,
+          lastName,
           city: debouncedCity,
           state: debouncedUf,
         });
@@ -669,10 +677,12 @@ function LeadModalExpressProvider({ children }: ProviderProps) {
       );
 
       // Track CompleteRegistration na Meta
+      const { firstName, lastName } = splitFullName(payload.name);
       trackCompleteRegistration({
         email: payload.email,
         phone: payload.phone,
-        firstName: payload.name.split(' ')[0],
+        firstName,
+        lastName,
         city: payload.city,
         state: payload.uf,
       });
@@ -681,7 +691,8 @@ function LeadModalExpressProvider({ children }: ProviderProps) {
       trackLeadComplete({
         email: payload.email,
         phone: payload.phone,
-        firstName: payload.name.split(' ')[0],
+        firstName,
+        lastName,
         city: payload.city,
         state: payload.uf,
       });
@@ -1228,6 +1239,8 @@ function LeadModalWizardProvider({ children }: ProviderProps) {
         throw new Error(parsed.error.issues[0]?.message || "Verifique os campos");
       }
 
+      const { firstName, lastName } = splitFullName(payload.name);
+
       await fetch(getWebhookUrl(), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -1238,7 +1251,8 @@ function LeadModalWizardProvider({ children }: ProviderProps) {
       trackLeadComplete({
         email: payload.email,
         phone: payload.phone,
-        firstName: payload.name.split(' ')[0],
+        firstName,
+        lastName,
         city: payload.city,
         state: payload.uf,
       });
