@@ -254,11 +254,11 @@ export async function trackMetaEvent(
 }
 
 /**
- * Helper: Track InitiateCheckout (modal open)
+ * Helper: Track AddToWishlist (modal open - interesse demonstrado)
  */
 export function trackModalOpen(): Promise<void> {
   return trackMetaEvent(
-    'InitiateCheckout',
+    'AddToWishlist',
     {
       content_category: 'lead_form',
       content_name: 'lp-2_modal',
