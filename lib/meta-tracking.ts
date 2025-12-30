@@ -28,6 +28,7 @@ interface UserData {
   lastName?: string;
   city?: string;
   state?: string;
+  country?: string;
 }
 
 interface MetaEventData {
@@ -92,23 +93,44 @@ function prepareUserData(userData: UserData): Record<string, string> {
   }
 
   if (userData.firstName) {
-    result.fn = hashSHA256(userData.firstName);
+    // Normaliza: lowercase + remove acentos
+    const normalized = userData.firstName
+      .trim()
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+    result.fn = hashSHA256(normalized);
   }
 
   if (userData.lastName) {
-    result.ln = hashSHA256(userData.lastName);
+    const normalized = userData.lastName
+      .trim()
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+    result.ln = hashSHA256(normalized);
   }
 
   if (userData.city) {
-    result.ct = hashSHA256(userData.city);
+    const normalized = userData.city
+      .trim()
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+    result.ct = hashSHA256(normalized);
   }
 
   if (userData.state) {
-    result.st = hashSHA256(userData.state);
+    // UF em lowercase (ex: "SP" → "sp")
+    result.st = hashSHA256(userData.state.trim().toLowerCase());
   }
 
-  // País fixo (Brasil)
-  result.country = hashSHA256('br');
+  // País fixo (Brasil) ou fornecido
+  if (userData.country) {
+    result.country = hashSHA256(userData.country.trim().toLowerCase());
+  } else {
+    result.country = hashSHA256('br');
+  }
 
   // Browser data (não hashear)
   if (typeof navigator !== 'undefined') {
