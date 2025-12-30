@@ -8,11 +8,16 @@ const META_PIXEL_TEST_EVENT_CODE = process.env.META_PIXEL_TEST_EVENT_CODE;
 export type MetaUserData = {
   client_ip_address?: string;
   client_user_agent?: string;
-  em?: string;
-  ph?: string;
-  fbc?: string;
-  fbp?: string;
-  external_id?: string;
+  em?: string; // Email (hashed SHA256)
+  ph?: string; // Phone (hashed SHA256)
+  fn?: string; // First Name (hashed SHA256)
+  ln?: string; // Last Name (hashed SHA256)
+  ct?: string; // City (hashed SHA256)
+  st?: string; // State (hashed SHA256)
+  country?: string; // Country code (hashed SHA256, 2-letter ISO)
+  fbc?: string; // Facebook Click ID (from cookie _fbc)
+  fbp?: string; // Facebook Browser ID (from cookie _fbp)
+  external_id?: string; // External user ID (hashed SHA256)
 };
 
 export type MetaCustomData = {
