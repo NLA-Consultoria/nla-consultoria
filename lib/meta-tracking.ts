@@ -235,13 +235,11 @@ export async function trackMetaEvent(
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        event_name: eventName,
-        event_id: eventID, // MESMO eventID do Pixel para deduplicação
-        event_time: Math.floor(Date.now() / 1000),
-        event_source_url: window.location.href,
-        action_source: 'website',
-        user_data: prepareUserData(userData),
-        custom_data: eventData,
+        eventName: eventName,
+        eventId: eventID, // MESMO eventID do Pixel para deduplicação
+        eventSourceUrl: window.location.href,
+        userData: prepareUserData(userData),
+        customData: eventData,
       }),
     });
 
