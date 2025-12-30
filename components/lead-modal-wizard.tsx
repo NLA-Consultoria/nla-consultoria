@@ -8,7 +8,6 @@ import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 import { leadSchema, PHONE_MASK, type LeadData } from "../lib/validators";
-import { trackMetaEvent } from "../lib/trackMetaEvent";
 import {
   trackFormOpen,
   trackFormStepComplete,
@@ -43,6 +42,7 @@ import {
   trackPartialLead,
   trackQualifiedLead,
   trackCompleteRegistration,
+  trackLeadComplete,
   trackStepAbandoned,
 } from "../lib/meta-tracking";
 import { sendWebhookWithRetry, saveFailedWebhook, retryFailedWebhooks } from "../lib/webhook-retry";
@@ -677,21 +677,13 @@ function LeadModalExpressProvider({ children }: ProviderProps) {
         state: payload.uf,
       });
 
-      // Track Meta Event antigo (compatibilidade)
-      trackMetaEvent({
-        eventName: "Lead",
-        eventSourceUrl: typeof window !== "undefined" ? window.location.href : undefined,
-        userData: {
-          email: payload.email,
-          phone: payload.phone,
-        },
-        customData: {
-          company: payload.company,
-          uf: payload.uf,
-          city: payload.city,
-          billing: payload.billing,
-          soldToGov: payload.soldToGov,
-        },
+      // Track Lead (APENAS para formulário completo)
+      trackLeadComplete({
+        email: payload.email,
+        phone: payload.phone,
+        firstName: payload.name.split(' ')[0],
+        city: payload.city,
+        state: payload.uf,
       });
 
       // Track sucesso
@@ -1242,23 +1234,13 @@ function LeadModalWizardProvider({ children }: ProviderProps) {
         body: JSON.stringify({ ...payload, source: "nla-site", step: "final", stepCount: 3 }),
       });
 
-      trackMetaEvent({
-        eventName: "Lead",
-        eventSourceUrl: typeof window !== "undefined" ? window.location.href : undefined,
-        userData: {
-          email: payload.email,
-          phone: payload.phone,
-          fbp: typeof window !== "undefined" ? getFbp() : undefined,
-          fbc: typeof window !== "undefined" ? getFbc() : undefined,
-          external_id: payload.email || undefined,
-        },
-        customData: {
-          company: payload.company,
-          uf: payload.uf,
-          city: payload.city,
-          billing: payload.billing,
-          soldToGov: payload.soldToGov,
-        },
+      // Track Lead (APENAS para formulário completo)
+      trackLeadComplete({
+        email: payload.email,
+        phone: payload.phone,
+        firstName: payload.name.split(' ')[0],
+        city: payload.city,
+        state: payload.uf,
       });
 
       trackFormSubmitSuccess();

@@ -204,10 +204,10 @@ export function trackModalOpen(): Promise<void> {
 }
 
 /**
- * Helper: Track LeadStepStart
+ * Helper: Track LeadStepStart (específico por step)
  */
 export function trackStepStart(stepNumber: number, stepName: string): Promise<void> {
-  return trackMetaEvent('LeadStepStart', {
+  return trackMetaEvent(`LeadStep${stepNumber}Start`, {
     step_number: stepNumber,
     step_name: stepName,
     source: 'lp-2',
@@ -215,10 +215,10 @@ export function trackStepStart(stepNumber: number, stepName: string): Promise<vo
 }
 
 /**
- * Helper: Track LeadStepComplete
+ * Helper: Track LeadStepComplete (específico por step)
  */
 export function trackStepComplete(stepNumber: number, stepName: string): Promise<void> {
-  return trackMetaEvent('LeadStepComplete', {
+  return trackMetaEvent(`LeadStep${stepNumber}Complete`, {
     step_number: stepNumber,
     step_name: stepName,
     source: 'lp-2',
@@ -226,7 +226,10 @@ export function trackStepComplete(stepNumber: number, stepName: string): Promise
 }
 
 /**
- * Helper: Track Lead (partial)
+ * Helper: Track PartialSubmit (NÃO usa evento "Lead" padrão)
+ *
+ * O evento "Lead" é reservado apenas para formulário completo.
+ * Este evento rastreia submissões parciais de campos importantes.
  */
 export function trackPartialLead(
   fieldName: string,
@@ -234,15 +237,16 @@ export function trackPartialLead(
   userData: UserData
 ): Promise<void> {
   return trackMetaEvent(
-    'Lead',
+    'PartialSubmit', // MUDADO: não usa "Lead" padrão
     {
       content_name: `partial_lead_${fieldName}`,
       status: 'partial',
+      field_name: fieldName,
       value,
       currency: 'BRL',
     },
-    userData,
-    true // standard event
+    userData
+    // NÃO é standard event
   );
 }
 
@@ -283,7 +287,28 @@ export function trackCompleteRegistration(userData: UserData): Promise<void> {
 }
 
 /**
- * Helper: Track LeadStepAbandoned
+ * Helper: Track Lead (APENAS formulário completo)
+ *
+ * ⚠️ IMPORTANTE: Este evento "Lead" padrão só deve ser disparado
+ * quando o formulário estiver 100% completo e enviado.
+ * Para leads parciais, use trackPartialLead() que dispara "PartialSubmit".
+ */
+export function trackLeadComplete(userData: UserData): Promise<void> {
+  return trackMetaEvent(
+    'Lead', // Evento padrão Meta
+    {
+      content_name: 'lp-2_complete_lead',
+      status: 'complete',
+      value: 1500,
+      currency: 'BRL',
+    },
+    userData,
+    true // standard event
+  );
+}
+
+/**
+ * Helper: Track LeadStepAbandoned (específico por step)
  */
 export function trackStepAbandoned(
   stepNumber: number,
@@ -291,7 +316,7 @@ export function trackStepAbandoned(
   lastField: string,
   timeSpent: number
 ): Promise<void> {
-  return trackMetaEvent('LeadStepAbandoned', {
+  return trackMetaEvent(`LeadStep${stepNumber}Abandoned`, {
     step_number: stepNumber,
     step_name: stepName,
     last_field_completed: lastField,
