@@ -292,6 +292,8 @@ export function trackPartialLead(
 
 /**
  * Helper: Track QualifiedLead
+ *
+ * @param userData - Deve incluir: email, phone, firstName, lastName, city, state
  */
 export function trackQualifiedLead(
   billingRange: string,
@@ -311,6 +313,8 @@ export function trackQualifiedLead(
 
 /**
  * Helper: Track CompleteRegistration
+ *
+ * @param userData - Deve incluir: email, phone, firstName, lastName, city, state
  */
 export function trackCompleteRegistration(userData: UserData): Promise<void> {
   return trackMetaEvent(
@@ -332,6 +336,8 @@ export function trackCompleteRegistration(userData: UserData): Promise<void> {
  * ⚠️ IMPORTANTE: Este evento "Lead" padrão só deve ser disparado
  * quando o formulário estiver 100% completo e enviado.
  * Para leads parciais, use trackPartialLead() que dispara "PartialSubmit".
+ *
+ * @param userData - Deve incluir: email, phone, firstName, lastName, city, state
  */
 export function trackLeadComplete(userData: UserData): Promise<void> {
   return trackMetaEvent(
