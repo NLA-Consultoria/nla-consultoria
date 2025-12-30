@@ -678,24 +678,34 @@ function LeadModalExpressProvider({ children }: ProviderProps) {
 
       // Track CompleteRegistration na Meta
       const { firstName, lastName } = splitFullName(payload.name);
-      trackCompleteRegistration({
-        email: payload.email,
-        phone: payload.phone,
-        firstName,
-        lastName,
-        city: payload.city,
-        state: payload.uf,
-      });
+      trackCompleteRegistration(
+        {
+          email: payload.email,
+          phone: payload.phone,
+          firstName,
+          lastName,
+          city: payload.city,
+          state: payload.uf,
+        },
+        payload.billing, // billing range
+        payload.soldToGov === "sim", // gov experience
+        payload.pain // pain description
+      );
 
       // Track Lead (APENAS para formulário completo)
-      trackLeadComplete({
-        email: payload.email,
-        phone: payload.phone,
-        firstName,
-        lastName,
-        city: payload.city,
-        state: payload.uf,
-      });
+      trackLeadComplete(
+        {
+          email: payload.email,
+          phone: payload.phone,
+          firstName,
+          lastName,
+          city: payload.city,
+          state: payload.uf,
+        },
+        payload.billing,
+        payload.soldToGov === "sim",
+        payload.pain
+      );
 
       // Track sucesso
       trackFormSubmitSuccess();
@@ -1248,14 +1258,19 @@ function LeadModalWizardProvider({ children }: ProviderProps) {
       });
 
       // Track Lead (APENAS para formulário completo)
-      trackLeadComplete({
-        email: payload.email,
-        phone: payload.phone,
-        firstName,
-        lastName,
-        city: payload.city,
-        state: payload.uf,
-      });
+      trackLeadComplete(
+        {
+          email: payload.email,
+          phone: payload.phone,
+          firstName,
+          lastName,
+          city: payload.city,
+          state: payload.uf,
+        },
+        payload.billing,
+        payload.soldToGov === "sim",
+        payload.pain
+      );
 
       trackFormSubmitSuccess();
       trackLeadQualification({
