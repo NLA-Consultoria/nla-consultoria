@@ -78,6 +78,24 @@ function hashSHA256(value: string): string {
 }
 
 /**
+ * Divide nome completo em firstName e lastName
+ * Ex: "João da Silva Santos" → { firstName: "João", lastName: "da Silva Santos" }
+ */
+export function splitFullName(fullName: string): { firstName: string; lastName: string } {
+  const trimmed = fullName.trim();
+  const parts = trimmed.split(/\s+/); // Split por espaços
+
+  if (parts.length === 1) {
+    return { firstName: parts[0] || '', lastName: '' };
+  }
+
+  const firstName = parts[0] || '';
+  const lastName = parts.slice(1).join(' ');
+
+  return { firstName, lastName };
+}
+
+/**
  * Prepara user_data para Meta Conversions API
  * Todos os campos são hasheados com SHA256
  */
