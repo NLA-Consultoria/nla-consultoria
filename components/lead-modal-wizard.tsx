@@ -642,7 +642,7 @@ function LeadModalExpressProvider({ children }: ProviderProps) {
         uf: (data.uf || "").toUpperCase(),
         city: manualCityInput ? normalizeCityInput(data.city) : data.city,
         billing: data.billing,
-        soldToGov: data.soldToGov,
+        soldToGov: data.soldToGov as "sim" | "nao",
         pain: data.pain,
       };
 
@@ -1228,7 +1228,7 @@ function LeadModalWizardProvider({ children }: ProviderProps) {
         uf: (data.uf || "").toUpperCase(),
         city: data.city,
         billing: data.billing,
-        soldToGov: data.soldToGov,
+        soldToGov: data.soldToGov as "sim" | "nao",
         pain: data.pain,
       };
       const parsed = leadSchema.safeParse(payload);
