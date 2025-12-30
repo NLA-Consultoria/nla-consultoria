@@ -96,6 +96,32 @@ export function splitFullName(fullName: string): { firstName: string; lastName: 
 }
 
 /**
+ * Calcula valor do lead baseado na faixa de faturamento
+ *
+ * Leads de empresas maiores valem mais:
+ * - Acima de R$ 1 mi: 1500 BRL
+ * - R$ 500 mil - R$ 1 mi: 1000 BRL
+ * - R$ 200 mil - R$ 500 mil: 700 BRL
+ * - R$ 50 mil - R$ 200 mil: 400 BRL
+ * - Até R$ 50 mil: 200 BRL
+ * - Desconhecido: 300 BRL (valor médio)
+ *
+ * Isso permite Meta criar Value-Based Lookalike Audiences,
+ * otimizando para leads de maior valor.
+ */
+export function calculateLeadValue(billingRange: string): number {
+  const values: Record<string, number> = {
+    "Acima de R$ 1 mi": 1500,
+    "R$ 500 mil - R$ 1 mi": 1000,
+    "R$ 200 mil - R$ 500 mil": 700,
+    "R$ 50 mil - R$ 200 mil": 400,
+    "Até R$ 50 mil": 200,
+  };
+
+  return values[billingRange] ?? 300; // Default: 300 (valor médio)
+}
+
+/**
  * Prepara user_data para Meta Conversions API
  * Todos os campos são hasheados com SHA256
  */
@@ -306,7 +332,7 @@ export function trackQualifiedLead(
     billing_range: billingRange, // KEEP for backward compat
     gov_experience: govExperience, // KEEP for backward compat
     source: 'lp-2',
-    value: 500,
+    value: calculateLeadValue(billingRange),
     currency: 'BRL',
     // Structured custom_data (Meta best practice)
     content_name: 'lead_qualification',
@@ -364,7 +390,7 @@ export function trackLeadComplete(
       content_name: 'lp-2_complete_lead',
       content_category: 'b2g_consulting',
       status: 'complete',
-      value: 1500,
+      value: billingRange ? calculateLeadValue(billingRange) : 1500,
       currency: 'BRL',
       // Business context
       billing_range: billingRange,
