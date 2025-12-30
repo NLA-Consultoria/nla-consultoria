@@ -218,6 +218,7 @@ export async function trackMetaEvent(
   isStandardEvent: boolean = false
 ): Promise<void> {
   const eventID = generateEventID(eventName);
+  const eventTime = Math.floor(Date.now() / 1000); // Unix timestamp (segundos)
 
   // 1. Client-side Meta Pixel
   if (typeof window !== 'undefined' && window.fbq) {
@@ -237,6 +238,7 @@ export async function trackMetaEvent(
       body: JSON.stringify({
         eventName: eventName,
         eventId: eventID, // MESMO eventID do Pixel para deduplicação
+        eventTime: eventTime, // MESMO timestamp do Pixel para deduplicação precisa
         eventSourceUrl: window.location.href,
         userData: prepareUserData(userData),
         customData: eventData,

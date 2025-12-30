@@ -5,6 +5,7 @@ import { sendMetaEvent, type MetaCustomData, type MetaUserData } from "../../../
 type IncomingEventPayload = {
   eventName: string;
   eventId?: string;
+  eventTime?: number; // Unix timestamp in seconds
   eventSourceUrl?: string;
   userData?: {
     em?: string; // Email (raw, will be hashed)
@@ -136,6 +137,7 @@ export async function POST(req: NextRequest) {
   const ok = await sendMetaEvent({
     eventName: payload.eventName,
     eventId: payload.eventId,
+    eventTime: payload.eventTime, // Timestamp from client (critical for deduplication)
     eventSourceUrl: payload.eventSourceUrl,
     actionSource: "website",
     userData,
