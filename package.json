@@ -6,8 +6,7 @@
     "dev": "node scripts/start.js",
     "build": "next build",
     "start": "NODE_ENV=production node scripts/start.js -p 3000",
-    "lint": "next lint",
-    "deploy:dev": "node scripts/deploy-dev.js"
+    "lint": "next lint"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.0.5",
