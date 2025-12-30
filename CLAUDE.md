@@ -35,6 +35,7 @@ npm run deploy:dev -- --fast --no-verify  # flags opcionais
 Copy `.env.example` to `.env.local` and configure:
 
 - `NEXT_PUBLIC_N8N_WEBHOOK_URL` — Lead form submission endpoint (required)
+- `NEXT_PUBLIC_N8N_PARTIAL_WEBHOOK_URL` — Endpoint for partial lead submissions on /lp-2 (optional, express variant only)
 - `NEXT_PUBLIC_AGENDA_URL` — Scheduling URL (Calendly/Cal.com) for post-submission redirect
 - `NEXT_PUBLIC_WHATSAPP_URL` — WhatsApp fallback link
 - `NEXT_PUBLIC_GTM_ID` — Google Tag Manager (optional)
@@ -76,6 +77,14 @@ Copy `.env.example` to `.env.local` and configure:
 3. On submit: POST to `NEXT_PUBLIC_N8N_WEBHOOK_URL` (client-side)
 4. Success → Redirect to `NEXT_PUBLIC_AGENDA_URL` or open `NEXT_PUBLIC_WHATSAPP_URL`
 5. Meta Pixel events tracked client-side (`trackMetaEvent.ts`) and server-side via `/api/meta-events`
+
+**Express Variant (/lp-2)**:
+- Uses 4-step progressive disclosure modal to reduce friction
+- Saves draft to localStorage (key: `lead_draft_v2`) for recovery
+- Sends partial webhooks after each step completion to `NEXT_PUBLIC_N8N_PARTIAL_WEBHOOK_URL`
+- Partial webhooks include `status: "partial"` and `step: number` for funnel tracking
+- Only sends each step once (tracked via `lastPartialStep` in localStorage)
+- Final submit uses same `NEXT_PUBLIC_N8N_WEBHOOK_URL` as standard variant
 
 **Analytics Stack**:
 - Meta Pixel injected in `layout.tsx` with deduplication check (`window.__META_PIXEL_LOADED`)

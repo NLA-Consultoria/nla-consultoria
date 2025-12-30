@@ -80,6 +80,14 @@ export function trackFormSubmitError(error: string) {
   window.clarity!("set", "form_error", error);
 }
 
+export function trackLeadPartial(step: number) {
+  if (!isClarityAvailable()) return;
+
+  window.clarity!("event", `lead_partial_step_${step}`);
+  window.clarity!("set", "has_partial_lead", "true");
+  window.clarity!("set", "partial_lead_last_step", String(step));
+}
+
 /**
  * EVENTOS DE QUALIFICAÇÃO - Rastreiam dados de qualificação do lead
  * Objetivo: Segmentar sessões por perfil de lead (tamanho, localização, experiência)
@@ -163,6 +171,47 @@ export function identifyUser(email: string, customData?: {
   if (customData?.company) {
     window.clarity!("set", "user_company", customData.company);
   }
+}
+
+/**
+ * EVENTOS DE INTERAÇÃO COM CAMPOS - Rastreiam interações individuais
+ * Objetivo: Identificar em qual campo específico os usuários travam ou abandonam
+ */
+
+export function trackFieldFocus(fieldName: string, step: number) {
+  if (!isClarityAvailable()) return;
+
+  window.clarity!("event", `field_focus_${fieldName}`);
+  window.clarity!("set", "last_field_focused", fieldName);
+  window.clarity!("set", "last_field_step", String(step));
+}
+
+export function trackFieldRevealed(fieldName: string, step: number) {
+  if (!isClarityAvailable()) return;
+
+  window.clarity!("event", `field_revealed_${fieldName}`);
+}
+
+export function trackFieldCompleted(fieldName: string, step: number) {
+  if (!isClarityAvailable()) return;
+
+  window.clarity!("event", `field_completed_${fieldName}`);
+  window.clarity!("set", "last_field_completed", fieldName);
+}
+
+export function trackFieldAbandoned(
+  fieldName: string,
+  step: number,
+  timeSpent: number,
+  attempts: number
+) {
+  if (!isClarityAvailable()) return;
+
+  window.clarity!("event", "form_field_abandoned");
+  window.clarity!("set", "abandoned_field", fieldName);
+  window.clarity!("set", "abandoned_field_step", String(step));
+  window.clarity!("set", "abandoned_field_time", String(timeSpent));
+  window.clarity!("set", "abandoned_field_attempts", String(attempts));
 }
 
 /**
