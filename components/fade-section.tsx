@@ -43,7 +43,7 @@ export function FadeSection({
     return () => observer.disconnect();
   }, []);
 
-  const Component = Comp as React.ElementType<React.HTMLAttributes<HTMLElement>>;
+  const Component = Comp as any;
 
   return (
     <Component
