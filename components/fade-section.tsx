@@ -2,7 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { cn } from "./ui/cn";
 
 type FadeSectionProps = React.HTMLAttributes<HTMLElement> & {
-  as?: keyof JSX.IntrinsicElements;
+  /**
+   * Elemento HTML que será renderizado. Mantemos o foco em elementos de bloco
+   * comuns para evitar inferência incorreta de props (ex: SVG).
+   */
+  as?: keyof HTMLElementTagNameMap;
   delayMs?: number;
 };
 
@@ -39,9 +43,11 @@ export function FadeSection({
     return () => observer.disconnect();
   }, []);
 
+  const Component = Comp as React.ElementType<React.HTMLAttributes<HTMLElement>>;
+
   return (
-    <Comp
-      ref={ref as React.RefObject<any>}
+    <Component
+      ref={ref}
       className={cn(
         "fade-section",
         visible && "fade-section--show",
@@ -51,7 +57,7 @@ export function FadeSection({
       {...rest}
     >
       {children}
-    </Comp>
+    </Component>
   );
 }
 
