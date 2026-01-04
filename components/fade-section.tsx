@@ -47,7 +47,7 @@ export function FadeSection({
 
   return (
     <Component
-      ref={ref}
+      ref={ref as React.Ref<any>}
       className={cn(
         "fade-section",
         visible && "fade-section--show",
