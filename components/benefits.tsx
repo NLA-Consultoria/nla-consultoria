@@ -1,60 +1,52 @@
-import { content } from "../content/home";
 import React from "react";
+import { content } from "../content/home";
+import { FadeSection } from "./fade-section";
+import { Target, ClipboardCheck, Map, Handshake } from "lucide-react";
 
 export function Benefits() {
-  const highlightWords = ["processo", "critérios", "prazos", "segurança"];
-  function renderHighlighted(text: string) {
-    const esc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    const re = new RegExp(`\\b(${highlightWords.map(esc).join("|")})\\b`, "giu");
-    const parts: React.ReactNode[] = [];
-    let last = 0;
-    let m: RegExpExecArray | null;
-    while ((m = re.exec(text)) !== null) {
-      if (m.index > last) parts.push(text.slice(last, m.index));
-      const w = m[0];
-      parts.push(
-        <span key={`${m.index}-${w}`} className="font-bold text-[1.06em]">{w}</span>
-      );
-      last = re.lastIndex;
-    }
-    if (last < text.length) parts.push(text.slice(last));
-    return parts;
-  }
-  // Seleciona 4 itens na ordem desejada e ignora "Linha do tempo"
-  const order = [
-    "Oportunidades",
-    "Checklist",
-    "Roteiro",
-    "Acompanhamento",
-  ];
+  const order = ["Oportunidades", "Checklist", "Roteiro", "Acompanhamento"];
   const flow = order
     .map((key) => content.recebe.bullets.find((b) => b.toLowerCase().startsWith(key.toLowerCase())))
     .filter(Boolean) as string[];
 
+  const icons = [Target, ClipboardCheck, Map, Handshake];
+
+  const splitText = (text: string) => {
+    const idx = text.indexOf(":");
+    if (idx === -1) return { title: "", description: text.trim() };
+    return {
+      title: text.slice(0, idx).trim(),
+      description: text.slice(idx + 1).trim(),
+    };
+  };
+
   return (
-    <section id="recebe" className="container py-16 scroll-mt-24 text-center" data-animate="fade">
-      <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl text-center">
-        {content.recebe.title}
-      </h2>
-      <div className="mx-auto mt-8 grid max-w-xl justify-center">
-        {flow.map((step, i) => (
-          <React.Fragment key={i}>
-            <div className="rounded-md border-2 border-dashed border-primary p-4 text-center text-base text-foreground">
-              {step}
-            </div>
-            {i < flow.length - 1 && (
-              <div className="my-3 flex items-center justify-center">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden>
-                  <path d="M12 4v16m0 0-4-4m4 4 4-4" stroke="currentColor" strokeWidth="2" className="text-primary" />
-                </svg>
-              </div>
-            )}
-          </React.Fragment>
-        ))}
+    <FadeSection as="section" id="recebe" className="section section--soft py-16">
+      <div className="container text-center">
+        <h2 className="text-4xl font-bold tracking-tight sm:text-5xl">
+          {content.recebe.title}
+        </h2>
+
+        <div className="relative mx-auto mt-10 max-w-3xl text-left">
+          <div className="space-y-6">
+            {flow.map((step, i) => {
+              const { title, description } = splitText(step);
+              const Icon = icons[i] || Target;
+              return (
+                <div key={i} className="relative flex items-center gap-4 sm:gap-6">
+                  <div className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary ring-2 ring-primary/10">
+                    <Icon className="h-5 w-5" aria-hidden />
+                  </div>
+                  <div className="flex-1 rounded-2xl border bg-card p-4 shadow-sm sm:p-5">
+                    {title && <div className="text-lg font-semibold">{title}</div>}
+                    <p className="mt-1 text-base text-muted-foreground">{description}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
-      <div className="mt-8 rounded-md border-2 border-primary/70 p-4 text-center font-semibold text-primary dark:text-white dark:border-white">
-        {renderHighlighted(content.recebe.note)}
-      </div>
-    </section>
+    </FadeSection>
   );
 }

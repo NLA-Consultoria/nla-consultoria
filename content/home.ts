@@ -1,5 +1,5 @@
-// Arquivo de conteúdo principal da Landing Page
-// Edite os textos conforme necessidade
+// Conteúdo principal da Landing Page
+// Atualize os textos conforme necessidade
 
 export const content = {
   nav: {
@@ -14,9 +14,9 @@ export const content = {
     cta: "Agendar minha reunião",
   },
   hero: {
-    title: "Aumente suas vendas — agora com o maior comprador do Brasil.",
+    title: "Aumente suas vendas agora com o maior comprador do Brasil.",
     subtitle:
-      "Se você já pensou em vender para prefeituras e governo, mas nunca tirou do papel, nós abrimos esse canal de receita para você: oportunidades certas, documentos no ponto e acompanhamento até a assinatura — sem caos interno.",
+      "Se você já pensou em vender para prefeituras e governo, mas nunca tirou do papel, nós abrimos esse canal de receita para você: oportunidades certas, documentos no ponto e acompanhamento até a assinatura - sem caos interno.",
     proofs: [],
     cta: "Agendar minha reunião",
   },
@@ -25,7 +25,7 @@ export const content = {
     bullets: [
       "Demanda constante: compras públicas acontecem o ano todo.",
       "Ticket previsível: contratos com prazo e escopo definidos.",
-      "Escala real: múltiplos órgãos, cidades e estados — com o mesmo produto.",
+      "Escala real: múltiplos órgãos, cidades e estados - com o mesmo produto.",
       "Barreiras de entrada: quem organiza a casa primeiro sai na frente.",
     ],
     cta: "Quero abrir esse canal de vendas",
@@ -39,7 +39,7 @@ export const content = {
       },
       {
         title: "2) Preparar para competir",
-        text: "Organizamos documentos e prazos, traduzimos os requisitos do que é realmente relevante e alinhamos a estratégia de participação — sem juridiquês.",
+        text: "Organizamos documentos e prazos, traduzimos os requisitos do que é realmente relevante e alinhamos a estratégia de participação - sem juridiquês.",
       },
       {
         title: "3) Executar e acompanhar",
@@ -52,25 +52,17 @@ export const content = {
     title: "O que você recebe",
     bullets: [
       "Oportunidades certas (por segmento/UF) com resumo em linguagem simples.",
-      "Checklist de documentos e calendário de prazos — sem correrias.",
-      "Roteiro de competição (o que fazer, quando e por quê).",
+      "Checklist de documentos e calendário de prazos - sem correrias.",
+      "Roteiro de competição (o que fazer, quando e por que).",
       "Acompanhamento após a vitória até assinatura/homologação.",
-      "Linha do tempo clara do início ao fim.",
     ],
-    note:
-      "Não prometemos vitória. Entregamos processo, critérios e prazos para você competir com segurança e decidir onde faz sentido entrar.",
   },
   publico: {
-    title: "Para quem é / Para quem não é",
+    title: "Para quem é",
     isFor: [
       "Empresas que já vendem para o privado e querem abrir uma frente estável com o setor público.",
-      "Quem quer aumentar vendas sem improviso e sem “apertar preço” no escuro.",
+      "Quem quer aumentar vendas sem improviso e sem 'apertar preço' no escuro.",
       "Quem valoriza processo claro e comunicação rápida.",
-    ],
-    notFor: [
-      "Quem busca garantia de resultado.",
-      "Quem não segue checklist e prazos.",
-      "Quem quer operar fora de conformidade.",
     ],
   },
   faq: {
@@ -89,12 +81,8 @@ export const content = {
         a: "Sim. Começamos pela reunião de alinhamento, organizamos a casa e já começamos a participar das primeiras oportunidades.",
       },
       {
-        q: "Vocês garantem vitória?",
-        a: "Não. Garantimos processo, critério e prazos. Decisão de competir sempre com análise de aderência.",
-      },
-      {
-        q: "E a parte jurídica?",
-        a: "Operação e estratégia ficam com a NLA. Quando necessário, o contencioso é feito por parceiro jurídico, com responsabilidades claras.",
+        q: "As licitações são para fornecimento de produtos ou serviços?",
+        a: "Há uma alta demanda de todos os órgãos governamentais, tanto para produtos quanto para serviços.",
       },
     ],
   },

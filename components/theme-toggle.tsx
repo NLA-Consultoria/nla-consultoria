@@ -1,34 +1,46 @@
 "use client";
 
-import { Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Button } from "./ui/button";
+import { Label } from "./ui/label";
+import { Switch } from "./ui/switch";
 
-export function ThemeToggle() {
-  const [mounted, setMounted] = useState(false);
-  const [dark, setDark] = useState(false);
+type ThemeOption = "green" | "blue";
 
-  useEffect(() => {
-    setMounted(true);
-    const isDark = document.documentElement.classList.contains("dark");
-    setDark(isDark);
-  }, []);
-
-  function toggle() {
-    const next = !dark;
-    setDark(next);
-    document.documentElement.classList.toggle("dark", next);
-    try {
-      localStorage.setItem("theme", next ? "dark" : "light");
-    } catch {}
+function applyTheme(theme: ThemeOption) {
+  const root = document.documentElement;
+  if (theme === "blue") {
+    root.classList.add("theme-blue");
+  } else {
+    root.classList.remove("theme-blue");
   }
-
-  if (!mounted) return null;
-
-  return (
-    <Button variant="ghost" size="icon" aria-label="Alternar tema" onClick={toggle}>
-      {dark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-    </Button>
-  );
+  localStorage.setItem("theme-color", theme);
 }
 
+export function ThemeToggle() {
+  const [theme, setTheme] = useState<ThemeOption>("green");
+
+  useEffect(() => {
+    const saved = (localStorage.getItem("theme-color") as ThemeOption | null) ?? "green";
+    setTheme(saved);
+    applyTheme(saved);
+  }, []);
+
+  const isBlue = theme === "blue";
+
+  return (
+    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+      <Label htmlFor="theme-toggle">Verde</Label>
+      <Switch
+        id="theme-toggle"
+        checked={isBlue}
+        onCheckedChange={(checked) => {
+          const nextTheme: ThemeOption = checked ? "blue" : "green";
+          setTheme(nextTheme);
+          applyTheme(nextTheme);
+        }}
+        aria-label="Alternar tema entre verde e azul"
+      />
+      <span>Azul</span>
+    </div>
+  );
+}

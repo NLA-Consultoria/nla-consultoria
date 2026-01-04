@@ -5,6 +5,7 @@ import { content } from "../content/home";
 import { Button } from "./ui/button";
 import { useLeadModal } from "./lead-modal-wizard";
 import LogoV8 from "./logo-v8";
+import { ThemeToggle } from "./theme-toggle";
 import { trackCtaClick } from "../lib/clarity-events";
 
 export function Header() {
@@ -17,23 +18,22 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-30 w-full border-b bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-between gap-4">
-        <Link href="#" className="flex items-center gap-2" aria-label="NLA Consultoria">
-          <LogoV8 size={28} theme="primary" />
+      <div className="container flex h-16 items-center gap-4">
+        <Link href="#" className="flex items-center gap-2 whitespace-nowrap" aria-label="NLA Consultoria">
+          <LogoV8 size={28} theme="mono" />
         </Link>
-        <nav className="hidden md:flex flex-1 items-center justify-center gap-6">
+        <nav className="hidden flex-1 items-center justify-center gap-6 whitespace-nowrap md:flex">
           {content.nav.anchors.map((a) => (
-            <Link
-              key={a.href}
-              href={a.href}
-              className="text-sm text-muted-foreground hover:text-foreground text-center"
-            >
+            <Link key={a.href} href={a.href} className="text-sm text-muted-foreground hover:text-foreground">
               {a.label}
             </Link>
           ))}
         </nav>
-        <div className="flex items-center gap-2">
-          <Button className="hidden md:inline-flex" onClick={handleCtaClick}>{content.nav.cta}</Button>
+        <div className="flex flex-shrink-0 items-center justify-end gap-3">
+          <ThemeToggle />
+          <Button size="lg" className="hidden md:inline-flex" onClick={handleCtaClick}>
+            {content.nav.cta}
+          </Button>
         </div>
       </div>
     </header>
