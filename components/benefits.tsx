@@ -1,4 +1,4 @@
-import React from "react";
+import type { CSSProperties } from "react";
 import { content } from "../content/home";
 import { FadeSection } from "./fade-section";
 import { Target, ClipboardCheck, Map, Handshake } from "lucide-react";
@@ -10,6 +10,8 @@ export function Benefits() {
     .filter(Boolean) as string[];
 
   const icons = [Target, ClipboardCheck, Map, Handshake];
+  const revealDelay = (delayMs: number) =>
+    ({ "--reveal-delay": `${delayMs}ms` } as CSSProperties);
 
   const splitText = (text: string) => {
     const idx = text.indexOf(":");
@@ -23,7 +25,11 @@ export function Benefits() {
   return (
     <FadeSection as="section" id="recebe" className="section section--soft py-16">
       <div className="container text-center">
-        <h2 className="text-4xl font-bold tracking-tight sm:text-5xl">
+        <h2
+          className="text-4xl font-bold tracking-tight sm:text-5xl"
+          data-animate="fade"
+          style={revealDelay(0)}
+        >
           {content.recebe.title}
         </h2>
 
@@ -33,11 +39,16 @@ export function Benefits() {
               const { title, description } = splitText(step);
               const Icon = icons[i] || Target;
               return (
-                <div key={i} className="relative flex items-center gap-4 sm:gap-6">
-                  <div className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600 ring-2 ring-blue-100">
+                <div
+                  key={i}
+                  className="group relative flex items-center gap-4 sm:gap-6 motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-out motion-safe:hover:-translate-y-1"
+                  data-animate="fade"
+                  style={revealDelay(80 + i * 90)}
+                >
+                  <div className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600 ring-2 ring-blue-100 motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-out group-hover:scale-105">
                     <Icon className="h-5 w-5" aria-hidden />
                   </div>
-                  <div className="flex-1 rounded-2xl border bg-card p-4 shadow-sm sm:p-5">
+                  <div className="flex-1 rounded-2xl border bg-card p-4 shadow-sm motion-safe:transition-shadow motion-safe:duration-300 motion-safe:ease-out group-hover:shadow-md sm:p-5">
                     {title && <div className="text-lg font-semibold">{title}</div>}
                     <p className="mt-1 text-base text-muted-foreground">{description}</p>
                   </div>

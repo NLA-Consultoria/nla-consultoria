@@ -6,7 +6,8 @@
     "dev": "node scripts/start.js",
     "build": "next build",
     "start": "NODE_ENV=production node scripts/start.js -p 3000",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.0.5",
@@ -29,6 +30,7 @@
     "@types/node": "20.11.30",
     "@types/react": "18.2.74",
     "@types/react-dom": "18.2.24",
+    "@playwright/test": "^1.47.2",
     "autoprefixer": "10.4.19",
     "eslint": "8.57.0",
     "eslint-config-next": "14.2.5",

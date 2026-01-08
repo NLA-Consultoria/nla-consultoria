@@ -1,12 +1,16 @@
+import type { CSSProperties } from "react";
 import Link from "next/link";
 import { content } from "../content/home";
 import { env } from "../lib/env";
 
 export function Footer() {
+  const revealDelay = (delayMs: number) =>
+    ({ "--reveal-delay": `${delayMs}ms` } as CSSProperties);
+
   return (
     <footer id="contato" className="border-t py-10">
       <div className="container grid gap-6 text-center sm:grid-cols-2">
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center" data-animate="fade" style={revealDelay(0)}>
           <p className="font-semibold">Contato</p>
           <ul className="mt-2 text-sm text-muted-foreground">
             <li>
@@ -29,7 +33,7 @@ export function Footer() {
             <li>{content.footer.cnpj}</li>
           </ul>
         </div>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center" data-animate="fade" style={revealDelay(120)}>
           <p className="text-sm text-muted-foreground">
             © {new Date().getFullYear()} NLA Consultoria
           </p>
