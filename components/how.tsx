@@ -21,13 +21,13 @@ export function How() {
               className="rounded-md border bg-accent p-5 text-center text-base transition-transform duration-200 ease-out hover:-translate-y-1 hover:shadow-lg"
             >
               <div className="flex flex-col items-center gap-2">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground text-lg font-semibold">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 text-white text-lg font-semibold">
                   {i + 1}
                 </div>
                 <div className="flex items-center gap-2">
                   {(() => {
                     const Icon = icons[i] || ClipboardList;
-                    return <Icon className="h-6 w-6 text-primary" aria-hidden="true" />;
+                    return <Icon className="h-6 w-6 text-blue-600" aria-hidden="true" />;
                   })()}
                   <h3 className="text-lg font-semibold">{s.title.replace(/^\d+\)\s*/, "")}</h3>
                 </div>

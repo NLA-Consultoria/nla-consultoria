@@ -32,7 +32,7 @@ export function Why() {
                 key={i}
                 className="flex flex-col items-center gap-3 rounded-md border bg-accent p-5 text-center text-foreground"
               >
-                <Icon className="h-7 w-7 text-primary" aria-hidden="true" />
+                <Icon className="h-7 w-7 text-blue-600" aria-hidden="true" />
                 {title && <h3 className="text-lg font-semibold leading-tight">{title}</h3>}
                 <p className="text-base text-muted-foreground">{description}</p>
               </li>

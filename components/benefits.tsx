@@ -34,7 +34,7 @@ export function Benefits() {
               const Icon = icons[i] || Target;
               return (
                 <div key={i} className="relative flex items-center gap-4 sm:gap-6">
-                  <div className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary ring-2 ring-primary/10">
+                  <div className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600 ring-2 ring-blue-100">
                     <Icon className="h-5 w-5" aria-hidden />
                   </div>
                   <div className="flex-1 rounded-2xl border bg-card p-4 shadow-sm sm:p-5">

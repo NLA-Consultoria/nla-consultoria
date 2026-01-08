@@ -5,7 +5,6 @@ import { content } from "../content/home";
 import { Button } from "./ui/button";
 import { useLeadModal } from "./lead-modal-wizard";
 import LogoV8 from "./logo-v8";
-import { ThemeToggle } from "./theme-toggle";
 import { trackCtaClick } from "../lib/clarity-events";
 
 export function Header() {
@@ -30,7 +29,6 @@ export function Header() {
           ))}
         </nav>
         <div className="flex flex-shrink-0 items-center justify-end gap-3">
-          <ThemeToggle />
           <Button size="lg" className="hidden md:inline-flex" onClick={handleCtaClick}>
             {content.nav.cta}
           </Button>
