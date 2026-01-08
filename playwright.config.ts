@@ -11,7 +11,9 @@ export default defineConfig({
     trace: "on-first-retry",
     screenshot: "only-on-failure",
     video: "retain-on-failure",
-    reducedMotion: "no-preference",
+    contextOptions: {
+      reducedMotion: "no-preference",
+    },
   },
   projects: [
     {
