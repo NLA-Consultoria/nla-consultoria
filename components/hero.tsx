@@ -1,41 +1,59 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { content } from "../content/home";
 import { Button } from "./ui/button";
 import { useLeadModal } from "./lead-modal-wizard";
-import { trackCtaClick } from "../lib/clarity-events";
+import { FadeSection } from "./fade-section";
 
 export function Hero() {
   const { open } = useLeadModal();
-
-  const handleCtaClick = () => {
-    trackCtaClick("hero");
-    open();
-  };
+  const revealDelay = (delayMs: number) =>
+    ({ "--reveal-delay": `${delayMs}ms` } as CSSProperties);
 
   return (
-    <section className="container py-16 sm:py-24" data-animate="fade">
-      <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 text-center">
-        <h1 className="text-3xl font-bold tracking-tight sm:text-5xl text-center">
-          {content.hero.title}
-        </h1>
-        <p className="text-lg text-muted-foreground text-center">
-          {content.hero.subtitle}
-        </p>
-        {content.hero.proofs?.length > 0 && (
-          <div className="mt-2 flex flex-wrap items-center justify-center gap-2 text-sm text-muted-foreground">
-            {content.hero.proofs.map((p, i) => (
-              <span key={i} className="flex items-center gap-2">
-                <span>{p}</span>
-                {i < content.hero.proofs.length - 1 && <span className="opacity-50">|</span>}
-              </span>
-            ))}
+    <FadeSection as="section" className="section section--soft py-16 sm:py-24">
+      <div className="container text-center">
+        <div className="mx-auto max-w-3xl">
+          <h1
+            className="text-4xl font-bold tracking-tight sm:text-6xl"
+            data-animate="fade"
+            style={revealDelay(0)}
+          >
+            {content.hero.title}
+          </h1>
+          <p
+            className="mt-4 text-lg text-muted-foreground"
+            data-animate="fade"
+            style={revealDelay(80)}
+          >
+            {content.hero.subtitle}
+          </p>
+          {content.hero.proofs?.length > 0 && (
+            <div
+              className="mt-6 flex flex-wrap items-center justify-center gap-3 text-sm text-muted-foreground"
+              data-animate="fade"
+              style={revealDelay(160)}
+            >
+              {content.hero.proofs.map((p, i) => (
+                <span key={i} className="flex items-center gap-2">
+                  <span>{p}</span>
+                  {i < content.hero.proofs.length - 1 && <span className="opacity-50">-</span>}
+                </span>
+              ))}
+            </div>
+          )}
+          <div className="mt-8 flex justify-center gap-3" data-animate="fade" style={revealDelay(240)}>
+            <Button
+              size="xl"
+              onClick={open}
+              className="cta-pulse w-full px-6 text-base sm:w-auto sm:px-14 sm:text-lg"
+            >
+              {content.hero.cta}
+            </Button>
           </div>
-        )}
-        <div className="mt-6 flex w-full justify-center gap-3">
-          <Button size="lg" onClick={handleCtaClick}>{content.hero.cta}</Button>
         </div>
       </div>
-    </section>
+    </FadeSection>
   );
 }

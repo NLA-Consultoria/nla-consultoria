@@ -1,55 +1,38 @@
+import type { CSSProperties } from "react";
 import { content } from "../content/home";
-import { Button } from "./ui/button";
-import { useLeadModal } from "./lead-modal-wizard";
+import { FadeSection } from "./fade-section";
 
 export function Audience() {
-  const { open } = useLeadModal();
+  const revealDelay = (delayMs: number) =>
+    ({ "--reveal-delay": `${delayMs}ms` } as CSSProperties);
 
   return (
-    <section id="para-quem" className="container py-16 scroll-mt-24" data-animate="fade">
-      <div className="rounded-xl border-2 border-primary/60 p-6 sm:p-8 dark:border-white">
-        <div className="grid gap-6 sm:grid-cols-2">
-          <div>
-            <h3 className="mb-4 text-center text-2xl font-semibold text-primary dark:text-white leading-tight">
-              <span>Para</span>
-              <br />
-              <span>quem é</span>
+    <FadeSection as="section" id="para-quem" className="section section--muted py-16">
+      <div className="container text-center">
+        <div className="rounded-xl border-2 border-border bg-background p-6 sm:p-8">
+          <div className="mx-auto max-w-3xl">
+            <h3
+              className="mb-6 text-center text-4xl font-bold tracking-tight text-foreground sm:text-5xl"
+              data-animate="fade"
+              style={revealDelay(0)}
+            >
+              {content.publico.title}
             </h3>
-            <ul className="grid gap-2">
+            <ul className="grid gap-3">
               {content.publico.isFor.map((b, i) => (
                 <li
                   key={i}
-                  className="rounded-md bg-accent p-4 text-center text-base text-foreground min-h-20 flex items-center justify-center"
+                  className="min-h-20 flex items-center justify-center rounded-md bg-accent p-4 text-center text-base text-foreground motion-safe:transition motion-safe:duration-300 motion-safe:ease-out motion-safe:hover:-translate-y-1 motion-safe:hover:shadow-md"
+                  data-animate="fade"
+                  style={revealDelay(80 + i * 80)}
                 >
                   {b}
                 </li>
               ))}
             </ul>
           </div>
-          <div>
-            <h3 className="mb-4 text-center text-2xl font-semibold text-primary dark:text-white leading-tight">
-              <span>Para</span>
-              <br />
-              <span>quem não é</span>
-            </h3>
-            <ul className="grid gap-2">
-              {content.publico.notFor.map((b, i) => (
-                <li
-                  key={i}
-                  className="rounded-md bg-accent p-4 text-center text-base text-foreground min-h-20 flex items-center justify-center"
-                >
-                  {b}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-        <div className="mt-8 flex justify-center">
-          <Button size="lg" onClick={open}>
-            Agendar minha reunião
-          </Button>
         </div>
       </div>
-    </section>
+    </FadeSection>
   );
 }

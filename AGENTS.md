@@ -15,6 +15,7 @@ Write idiomatic TypeScript with ES modules, 2-space indentation, and `async/awai
 
 ## Testing Guidelines
 Automated tests are not yet formalized; when adding them, colocate unit tests next to the component or under `app/__tests__/` using Vitest or Jest. Regardless of automation, verify form flows manually: submit with valid/invalid payloads, confirm GTM/PostHog snippets toggle via env vars, and inspect Lighthouse accessibility checks. Document any new test command inside `package.json` and update this guide.
+- `npm run test:e2e` — run Playwright checks (starts Next dev server at `http://localhost:3000`).
 
 ## Commit & Pull Request Guidelines
 Commits follow short, action-oriented messages (see `git log`: “Alt visuais”, “Correção de bugs build”). Use present tense, keep under ~70 characters, and group related changes per commit. Pull requests should describe the user impact, outline testing performed (`npm run lint`, `npm run build`, manual QA), and link tracking issues. Include screenshots or GIFs for UI tweaks, and flag any env var or content changes so reviewers can validate staging configs.

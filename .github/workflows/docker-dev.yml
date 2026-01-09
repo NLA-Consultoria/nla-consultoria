@@ -57,3 +57,15 @@ jobs:
             GIT_SHA=${{ env.GIT_SHA_SHORT }}
             GIT_BRANCH=${{ github.ref_name }}
             GIT_DATE=${{ env.GIT_DATE }}
+
+      - name: Trigger Easypanel Deploy (DEV)
+        run: |
+          echo "🚀 Triggering Easypanel deploy for DEV environment..."
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST http://37.60.247.149:3000/api/deploy/9f39a3d3dd7f246526cfe27d138cf149b3c238fef23b5de7)
+          echo "📡 Webhook response: HTTP $HTTP_CODE"
+          if [ $HTTP_CODE -ge 200 ] && [ $HTTP_CODE -lt 300 ]; then
+            echo "✅ Deploy triggered successfully!"
+          else
+            echo "⚠️  Warning: Deploy webhook returned HTTP $HTTP_CODE"
+            echo "Check Easypanel manually if needed"
+          fi

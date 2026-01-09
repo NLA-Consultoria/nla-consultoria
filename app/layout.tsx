@@ -7,8 +7,8 @@ import { LeadModalProvider } from "../components/lead-modal-wizard";
 import { CookieConsent } from "../components/cookie-consent";
 import { Header } from "../components/header";
 import { Suspense } from "react";
-import { MetaTracker } from "../components/meta-tracker";
 import { ClarityTracker } from "../components/clarity-tracker";
+import { EngagementTracker } from "../components/engagement-tracker";
 import { FadeOnScroll } from "../components/fade-on-scroll";
 
 export const metadata: Metadata = {
@@ -116,7 +116,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Header />
           {children}
           <Suspense fallback={null}>
-            <MetaTracker />
+            <EngagementTracker />
             <ClarityTracker />
           </Suspense>
         </LeadModalProvider>
