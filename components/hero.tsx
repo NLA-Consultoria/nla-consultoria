@@ -44,7 +44,11 @@ export function Hero() {
             </div>
           )}
           <div className="mt-8 flex justify-center gap-3" data-animate="fade" style={revealDelay(240)}>
-            <Button size="xl" onClick={open} className="cta-pulse">
+            <Button
+              size="xl"
+              onClick={open}
+              className="cta-pulse w-full px-6 text-base sm:w-auto sm:px-14 sm:text-lg"
+            >
               {content.hero.cta}
             </Button>
           </div>

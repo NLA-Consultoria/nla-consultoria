@@ -23,7 +23,13 @@ export function CtaFinal() {
             {content.ctaFinal.title}
           </h2>
           <div className="mt-6" data-animate="fade" style={revealDelay(120)}>
-            <Button size="xl" onClick={open} className="cta-pulse">{content.ctaFinal.cta}</Button>
+            <Button
+              size="xl"
+              onClick={open}
+              className="cta-pulse w-full px-6 text-base sm:w-auto sm:px-14 sm:text-lg"
+            >
+              {content.ctaFinal.cta}
+            </Button>
           </div>
         </div>
       </div>

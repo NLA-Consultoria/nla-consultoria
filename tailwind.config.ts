@@ -54,10 +54,30 @@ const config: Config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "float-y": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
+        "float-x": {
+          "0%, 100%": { transform: "translateX(0)" },
+          "50%": { transform: "translateX(12px)" },
+        },
+        sheen: {
+          "0%": { backgroundPosition: "0% 50%" },
+          "100%": { backgroundPosition: "100% 50%" },
+        },
+        marquee: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "float-y": "float-y 8s ease-in-out infinite",
+        "float-x": "float-x 12s ease-in-out infinite",
+        sheen: "sheen 10s ease-in-out infinite",
+        marquee: "marquee 18s linear infinite",
       },
     },
   },
@@ -65,4 +85,3 @@ const config: Config = {
 };
 
 export default config;
-

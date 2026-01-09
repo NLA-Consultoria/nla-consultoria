@@ -55,7 +55,11 @@ export function Why() {
           data-animate="fade"
           style={revealDelay(80 + content.porque.bullets.length * 90)}
         >
-          <Button size="xl" onClick={open} className="cta-pulse">
+          <Button
+            size="xl"
+            onClick={open}
+            className="cta-pulse w-full px-6 text-base sm:w-auto sm:px-14 sm:text-lg"
+          >
             {content.porque.cta}
           </Button>
         </div>

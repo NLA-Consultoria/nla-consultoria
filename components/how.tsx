@@ -52,7 +52,11 @@ export function How() {
           data-animate="fade"
           style={revealDelay(80 + content.comoFunciona.steps.length * 90)}
         >
-          <Button size="xl" onClick={open} className="cta-pulse">
+          <Button
+            size="xl"
+            onClick={open}
+            className="cta-pulse w-full px-6 text-base sm:w-auto sm:px-14 sm:text-lg"
+          >
             {content.comoFunciona.cta}
           </Button>
         </div>
